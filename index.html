@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spectergram - Secure End-to-End Encrypted Messaging">
+    <meta name="theme-color" content="#6200EA">
+    <title>Spectergram</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>🔐 Spectergram</h1>
+            <p class="subtitle">Secure Ephemeral Messaging</p>
+            <div class="status-indicator">
+                <span id="connectionStatus" class="status-dot offline"></span>
+                <span id="connectionText">Disconnected</span>
+            </div>
+        </header>
+
+        <!-- Login/Setup Screen -->
+        <div id="setupScreen" class="screen active">
+            <div class="setup-container">
+                <h2>Welcome to Spectergram</h2>
+                <p class="info-text">End-to-end encrypted messaging. No conversation history saved.</p>
+                
+                <div class="input-group">
+                    <label for="usernameInput">Enter your username:</label>
+                    <input type="text" id="usernameInput" placeholder="Username" maxlength="20" autocomplete="off">
+                </div>
+                
+                <div class="input-group">
+                    <label for="roomInput">Enter room name:</label>
+                    <input type="text" id="roomInput" placeholder="Room name" maxlength="30" autocomplete="off">
+                </div>
+                
+                <button id="joinButton" class="btn-primary">Join Room</button>
+                
+                <div class="encryption-info">
+                    <p>🔒 Messages are encrypted end-to-end</p>
+                    <p>💨 No messages are stored on servers</p>
+                    <p>🌐 Online communication only</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chatScreen" class="screen">
+            <div class="chat-info">
+                <div class="room-info">
+                    <strong>Room:</strong> <span id="currentRoom"></span>
+                </div>
+                <div class="user-info">
+                    <strong>You:</strong> <span id="currentUser"></span>
+                </div>
+                <button id="leaveButton" class="btn-secondary">Leave Room</button>
+            </div>
+            
+            <div id="messagesContainer" class="messages-container">
+                <div class="welcome-message">
+                    <p>🔐 End-to-end encrypted chat</p>
+                    <p>Messages are ephemeral and not saved anywhere</p>
+                </div>
+            </div>
+            
+            <div class="message-input-container">
+                <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
+                <button id="sendButton" class="btn-send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="crypto.js"></script>
+    <script src="signalr.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
