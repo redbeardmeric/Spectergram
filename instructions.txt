@@ -1,0 +1,3 @@
+https://github.com/coreybutler/nvm-windows/releases
+nvm install 22.20.0
+nvm use 22.20.0
