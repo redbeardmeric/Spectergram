@@ -2,9 +2,16 @@
 
 ## Development Dependencies
 
+### Node Version Manager
+
 1. Install nvm-windows [from here](https://github.com/coreybutler/nvm-windows/releases)
 2. Download the latest long term support version of nodejs with nvm by executing `nvm install 22.20.0`.
 3. Execute `nvm use 22.20.0` so that the command `npm` will target the version of node that we just downloaded.
+
+### Azure Functions Core Tools
+
+1. Install the Azure Functions Core Tools cli from [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-typescript) to be able to debug locally.
+
 
 ## Options used when scaffolding (For reference):
 
