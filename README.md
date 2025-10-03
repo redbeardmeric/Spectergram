@@ -66,9 +66,38 @@ npm create vite@latest . --template react-ts
 
 Use `npm run dev` to start the server.
 
+## Important Notes
+
+### Typescript
+When scaffolding the project, I configured it to use TypeScript. My reasoning is that we should probably be using it anyways since it will make our code more readable, easier to navigate and understand with intellisense, provide type safety during compilation (prevent type related bugs), and **make it easier to create technical documentation**. 
+
+However, I modified the configuration such that normal javascript can still be written and used. To demonstrate, I created a new route accessible from `http://localhost:3000/js` that is served from `/src/testJS.jsx`.
+
+### Tailwind CSS
+
+Additionally, the project is set up using **[TailwindCSS](https://tailwindcss.com/docs/styling-with-utility-classes)**. If you are unfamiliar, TailwindCSS provides *utility classes* that essentially just provide shorthand to combinations of different CSS properties. 
+
+**Example:**
+
+```html
+<div class="bg-blue-500 text-white p-4 rounded-lg shadow-lg">
+  Hello Tailwind!
+</div>
+```
+In this case:
+
+- bg-blue-500 → sets a medium blue background
+- text-white → makes the text white
+- p-4 → applies padding on all sides
+- rounded-lg → rounds the corners
+- shadow-lg → applies a large drop shadow
+
+Instead of writing a custom CSS class, you compose these utilities directly in the markup. This makes it easy to build consistent, responsive UIs without switching between HTML and CSS files.
+
 Everything below this point is boilerplate information generated from scaffolding the project.
 
 ---
+
 
 # Getting Started
 
