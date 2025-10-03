@@ -12,6 +12,11 @@
 
 1. Install the Azure Functions Core Tools cli from [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-typescript) to be able to debug locally.
 
+### Required VSCode extensions (if you are using VSCode)
+
+1. `biomejs.biome`
+2. `ms-azuretools.vscode-azurefunctions`
+
 
 ## Options used when scaffolding (For reference):
 
