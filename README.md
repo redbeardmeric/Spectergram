@@ -89,6 +89,10 @@ However, I modified the configuration such that normal javascript can still be w
 
 Additionally, the project is set up using **[TailwindCSS](https://tailwindcss.com/docs/styling-with-utility-classes)**. If you are unfamiliar, TailwindCSS provides *utility classes* that essentially just provide shorthand to combinations of different CSS properties. 
 
+### Biome / Lefthook
+
+There is a pre-commit hook set up with biome and lefthook. This will automatically format your code and apply safe fixes before committing to the repository. This is to keep all of our commits meaningful and easy to diagnose; real changes will not be obscured by irrelevant format changes like swapping import order or modifying the size of an indent.
+
 **Example:**
 
 ```html
