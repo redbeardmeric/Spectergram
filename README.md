@@ -1,4 +1,119 @@
-Welcome to your new TanStack app! 
+# Spectergram
+
+## Development Dependencies
+
+### Node Version Manager
+
+1. Install nvm-windows [from here](https://github.com/coreybutler/nvm-windows/releases)
+2. Download the latest long term support version of nodejs with nvm by executing `nvm install 22.20.0`.
+3. Execute `nvm use 22.20.0` so that the command `npm` will target the version of node that we just downloaded.
+
+### Azure Functions Core Tools
+
+1. Install the Azure Functions Core Tools cli from [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-typescript) to be able to debug locally.
+
+### Required VSCode extensions (if you are using VSCode)
+
+1. `biomejs.biome`
+2. `ms-azuretools.vscode-azurefunctions`
+
+
+## Options used when scaffolding (For reference):
+
+```
+npm create vite@latest . --template react-ts
+
+> npx
+> create-vite . react-ts
+│
+◇  Current directory is not empty. Please choose how to proceed:
+│  Ignore files and continue
+│
+◇  Package name:
+│  spectergram
+│
+◇  Select a framework:
+│  React
+│
+◇  Select a variant:
+│  TanStack Router ↗
+│
+◇  Use rolldown-vite (Experimental)?:
+│  No
+│
+◇  Install with npm and start now?
+│  Yes
+
+> npx
+> create-tsrouter-app . --framework React --interactive
+
+┌  Let's configure your TanStack application
+│
+◇  Select the router type:
+│  Code Router - Traditional code-based routing
+│
+◇  Would you like to use TypeScript?
+│  Yes
+│
+◇  Would you like to use Tailwind CSS?
+│  Yes
+│
+◇  Select toolchain
+│  Biome
+│
+◇  Select hosting provider
+│  None
+│
+◇  What add-ons would you like for your project?
+│  T3Env
+│
+◇  Initialized git repository
+│
+◇  Installed dependencies
+│
+└  Your TanStack app is ready in 'Spectergram'.
+```
+
+## To Start
+
+Use `npm run dev` to start the server.
+
+## Important Notes
+
+### Typescript
+When scaffolding the project, I configured it to use TypeScript. My reasoning is that we should probably be using it anyways since it will make our code more readable, easier to navigate and understand with intellisense, provide type safety during compilation (prevent type related bugs), and **make it easier to create technical documentation**. 
+
+However, I modified the configuration such that normal javascript can still be written and used. To demonstrate, I created a new route accessible from `http://localhost:3000/js` that is served from `/src/testJS.jsx`.
+
+### Tailwind CSS
+
+Additionally, the project is set up using **[TailwindCSS](https://tailwindcss.com/docs/styling-with-utility-classes)**. If you are unfamiliar, TailwindCSS provides *utility classes* that essentially just provide shorthand to combinations of different CSS properties. 
+
+### Biome / Lefthook
+
+There is a pre-commit hook set up with biome and lefthook. This will automatically format your code and apply safe fixes before committing to the repository. This is to keep all of our commits meaningful and easy to diagnose; real changes will not be obscured by irrelevant format changes like swapping import order or modifying the size of an indent.
+
+**Example:**
+
+```html
+<div class="bg-blue-500 text-white p-4 rounded-lg shadow-lg">
+  Hello Tailwind!
+</div>
+```
+In this case:
+
+- bg-blue-500 → sets a medium blue background
+- text-white → makes the text white
+- p-4 → applies padding on all sides
+- rounded-lg → rounds the corners
+- shadow-lg → applies a large drop shadow
+
+Instead of writing a custom CSS class, you compose these utilities directly in the markup. This makes it easy to build consistent, responsive UIs without switching between HTML and CSS files.
+
+Everything below this point is boilerplate information generated from scaffolding the project.
+
+---
+
 
 # Getting Started
 
@@ -39,6 +154,21 @@ This project uses [Biome](https://biomejs.dev/) for linting and formatting. The 
 npm run lint
 npm run format
 npm run check
+```
+
+
+## T3Env
+
+- You can use T3Env to add type safety to your environment variables.
+- Add Environment variables to the `src/env.mjs` file.
+- Use the environment variables in your code.
+
+### Usage
+
+```ts
+import { env } from "@/env";
+
+console.log(env.VITE_APP_TITLE);
 ```
 
 
