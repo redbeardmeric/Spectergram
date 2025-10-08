@@ -1,0 +1,33 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Azure Functions: Debug Backend",
+			"type": "node",
+			"request": "attach",
+			"restart": true,
+			"port": 9229,
+			"preLaunchTask": "func: host start"
+		},
+		{
+			"name": "Vite: Debug Frontend (Chrome)",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/src",
+			"sourceMaps": true,
+			"runtimeArgs": ["--remote-debugging-port=9222"],
+			"preLaunchTask": "vite: dev"
+		},
+		{
+			"name": "Vite: Debug Frontend (Edge)",
+			"type": "msedge",
+			"request": "launch",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/src",
+			"sourceMaps": true,
+			"runtimeArgs": ["--remote-debugging-port=9222"],
+			"preLaunchTask": "vite: dev"
+		}
+	]
+}
