@@ -5,11 +5,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "strict": false,
+    "typeRoots": ["./node_modules/@types"],
   },
-  "include": ["./**/*.ts"],
-  "exclude": ["node_modules", "dist"]
 }
