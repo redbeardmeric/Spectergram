@@ -6,23 +6,19 @@ import {
 } from "@azure/functions";
 import bcrypt from "bcryptjs";
 
-// Define the shape of the registration request body
 interface RegisterRequestBody {
     username: string;
     password: string;
 }
 
-// In-memory user store (replace with DB in production)
 const users: Record<string, { password: string }> = {};
 
 export async function register(
     request: HttpRequest,
-    context: InvocationContext,
+    _context: InvocationContext, 
 ): Promise<HttpResponseInit> {
-    // Type the parsed body
     const { username, password } = await request.json() as RegisterRequestBody;
 
-    // Validate username and password are present
     if (!username || !password) {
         return { status: 400, body: "Username and password required" };
     }

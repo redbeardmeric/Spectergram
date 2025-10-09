@@ -6,7 +6,6 @@ import {
 } from "@azure/functions";
 import jwt from "jsonwebtoken";
 
-// Types for message structure and request body
 interface MessageRequestBody {
     to: string;
     message: string;
@@ -18,11 +17,9 @@ interface UserStore {
     messages: { from: string; message: string; timestamp: string }[];
 }
 
-// In-memory user/message storage (replace with a real DB in production!)
 const users: Record<string, UserStore> = {};
 const JWT_SECRET = "your_secret_key";
 
-// JWT authentication
 function authenticate(request: HttpRequest): string | null {
     const auth = request.headers.get("authorization");
     if (!auth) return null;
@@ -37,19 +34,17 @@ function authenticate(request: HttpRequest): string | null {
 
 export async function messages(
     request: HttpRequest,
-    context: InvocationContext,
+    _context: InvocationContext, 
 ): Promise<HttpResponseInit> {
     const username = authenticate(request);
     if (!username) return { status: 401, body: "Unauthorized" };
     const user = users[username];
     if (!user) return { status: 404, body: "User not found" };
 
-    // GET: Fetch all received messages for this user
     if (request.method === "GET") {
         return { status: 200, body: JSON.stringify({ messages: user.messages || [] }) };
     }
 
-    // POST: Send a message to a friend
     if (request.method === "POST") {
         const { to, message } = await request.json() as MessageRequestBody;
         if (!users[to]) return { status: 404, body: "Recipient not found" };
@@ -59,7 +54,6 @@ export async function messages(
         return { status: 200, body: "Message sent" };
     }
 
-    // Unsupported method
     return { status: 405, body: "Method not allowed" };
 }
 

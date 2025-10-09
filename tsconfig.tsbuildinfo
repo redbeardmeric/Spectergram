@@ -1,0 +1,1 @@
+{"root":["./vite.config.ts","./api/src/friendlists.ts","./api/src/index.ts","./api/src/messages.ts","./api/src/userlogin.ts","./api/src/userprofile.ts","./api/src/userregister.ts","./api/src/functions/httptrigger1.ts","./src/env.ts","./src/reportwebvitals.ts","./src/app.test.tsx","./src/app.tsx","./src/main.tsx","./src/routes.tsx","./src/components/header.tsx"],"version":"5.9.3"}

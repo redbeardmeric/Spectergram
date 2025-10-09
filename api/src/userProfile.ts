@@ -6,7 +6,17 @@ import {
 } from "@azure/functions";
 import jwt from "jsonwebtoken";
 
-const users: Record<string, { password: string, profile: any }> = {};
+interface UserProfile {
+    bio?: string;
+    displayName?: string;
+}
+
+interface ProfileRequestBody {
+    bio?: string;
+    displayName?: string;
+}
+
+const users: Record<string, { password: string; profile: UserProfile }> = {};
 const JWT_SECRET = "your_secret_key";
 
 function authenticate(request: HttpRequest): string | null {
@@ -23,7 +33,7 @@ function authenticate(request: HttpRequest): string | null {
 
 export async function profile(
     request: HttpRequest,
-    context: InvocationContext,
+    _context: InvocationContext, 
 ): Promise<HttpResponseInit> {
     const username = authenticate(request);
     if (!username) return { status: 401, body: "Unauthorized" };
@@ -33,13 +43,15 @@ export async function profile(
     if (request.method === "GET") {
         return { status: 200, body: JSON.stringify({ profile: user.profile || {} }) };
     }
+
     if (request.method === "PUT") {
-        const { bio, displayName } = await request.json();
+        const { bio, displayName } = await request.json() as ProfileRequestBody;
         user.profile = user.profile || {};
         if (bio !== undefined) user.profile.bio = bio;
         if (displayName !== undefined) user.profile.displayName = displayName;
         return { status: 200, body: JSON.stringify({ profile: user.profile }) };
     }
+
     return { status: 405, body: "Method not allowed" };
 }
 
@@ -48,4 +60,3 @@ app.http("profile", {
     authLevel: "anonymous",
     handler: profile,
 });
-

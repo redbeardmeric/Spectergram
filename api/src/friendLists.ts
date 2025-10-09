@@ -27,7 +27,7 @@ function authenticate(request: HttpRequest): string | null {
 
 export async function friends(
     request: HttpRequest,
-    context: InvocationContext,
+    _context: InvocationContext, 
 ): Promise<HttpResponseInit> {
     const username = authenticate(request);
     if (!username) return { status: 401, body: "Unauthorized" };
