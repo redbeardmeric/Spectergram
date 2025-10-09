@@ -4,7 +4,7 @@ import {
     type HttpResponseInit,
     type InvocationContext,
 } from "@azure/functions";
-import bcrypt from "bcryptjs";
+import bcrypt = require("bcryptjs")
 
 interface RegisterRequestBody {
     username: string;

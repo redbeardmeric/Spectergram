@@ -4,8 +4,8 @@ import {
     type HttpResponseInit,
     type InvocationContext,
 } from "@azure/functions";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcrypt = require("bcryptjs")
+import {jwt} from "jsonwebtoken";
 
 // Define user storage type
 interface UserRecord {
