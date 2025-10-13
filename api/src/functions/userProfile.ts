@@ -17,7 +17,7 @@ interface ProfileRequestBody {
 }
 
 const users: Record<string, { password: string; profile: UserProfile }> = {};
-const JWT_SECRET = "your_secret_key";
+const JWT_SECRET = "samyog";
 
 function authenticate(request: HttpRequest): string | null {
     const auth = request.headers.get("authorization");
