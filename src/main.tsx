@@ -13,6 +13,7 @@ import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
 import App from './App.tsx'
+import MessagingPage from './testDRMessaging.tsx'
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -29,7 +30,13 @@ const indexRoute = createRoute({
   component: App,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute])
+const messagesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/messages',
+  component: MessagingPage,
+})
+
+const routeTree = rootRoute.addChildren([indexRoute, messagesRoute])
 
 const router = createRouter({
   routeTree,
