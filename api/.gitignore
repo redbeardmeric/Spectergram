@@ -99,4 +99,4 @@ __queuestorage__
 __azurite_db*__.json
 
 # Typescript config
-tsconfig.tsbuild.info
+tsconfig.tsbuildinfo
