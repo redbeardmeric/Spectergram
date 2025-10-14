@@ -1,8 +1,7 @@
-import Header from "./Header"
-import { useState } from "react"
+import { useState } from "react";
 
 export default function App() {
-  const [activeFriend, setActiveFriend] = useState("Alex")
+  const [activeFriend, setActiveFriend] = useState("Alex");
 
   const friends = [
     { name: "Alex", online: true },
@@ -10,22 +9,24 @@ export default function App() {
     { name: "James", online: false },
     { name: "Sushanta", online: true },
     { name: "Biraj", online: true },
-  ]
+  ];
 
   const messages = [
     { sender: "Alex", text: "Hey, how’s your UI coming along?" },
     { sender: "You", text: "Almost done! Retrospective is today 😅" },
     { sender: "Alex", text: "Nice! Let’s demo together later." },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-[#0b0e16] text-gray-100 font-sans">
-      <Header />
+      {/* ✅ Header removed (it’s already in main.tsx) */}
 
       <div className="flex h-[calc(100vh-4rem)]">
-        {/* Friend List */}
+        {/* 🧭 Friend List */}
         <aside className="w-1/4 bg-[#101522] border-r border-cyan-500/20 p-4 flex flex-col">
-          <h2 className="text-lg font-semibold text-cyan-400 mb-4">Friends List</h2>
+          <h2 className="text-lg font-semibold text-cyan-400 mb-4">
+            Friends List
+          </h2>
           <ul className="space-y-2 overflow-y-auto">
             {friends.map((f) => (
               <li
@@ -38,7 +39,9 @@ export default function App() {
                 }`}
               >
                 <span
-                  className={`h-3 w-3 rounded-full ${f.online ? "bg-green-400" : "bg-gray-500"}`}
+                  className={`h-3 w-3 rounded-full ${
+                    f.online ? "bg-green-400" : "bg-gray-500"
+                  }`}
                 ></span>
                 <span className="font-medium">{f.name}</span>
               </li>
@@ -46,7 +49,7 @@ export default function App() {
           </ul>
         </aside>
 
-        {/* Chat Window */}
+        {/* 💬 Chat Window */}
         <main className="flex-1 flex flex-col justify-between bg-[#0d111a] p-6">
           <div>
             <h2 className="text-xl font-semibold text-cyan-400 mb-2">
@@ -74,6 +77,7 @@ export default function App() {
             </div>
           </div>
 
+          {/* ✉️ Message Input */}
           <form className="mt-4 flex gap-3">
             <input
               type="text"
@@ -90,5 +94,5 @@ export default function App() {
         </main>
       </div>
     </div>
-  )
+  );
 }
