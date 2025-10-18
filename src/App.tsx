@@ -1,5 +1,4 @@
 // src/App.tsx
-import React from "react";
 import { Link } from "@tanstack/react-router";
 
 export default function App() {
