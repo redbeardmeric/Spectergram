@@ -1,36 +1,29 @@
-import logo from './logo.svg'
+// src/App.tsx
+import React from "react";
+import { Link } from "@tanstack/react-router";
 
-function App() {
+export default function App() {
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
-    </div>
-  )
-}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d0d0d] text-white text-center">
+      <h1 className="text-5xl font-bold mb-6">Spectergram</h1>
+      <p className="text-gray-400 mb-10">
+        Connect securely. Chat privately. Experience simplicity.
+      </p>
 
-export default App
+      <div className="flex gap-6">
+        <Link
+          to="/login"
+          className="bg-[#61dafb] text-black px-6 py-2 rounded-lg hover:bg-[#52c0e5] transition"
+        >
+          Log In
+        </Link>
+        <Link
+          to="/signup"
+          className="border border-[#61dafb] px-6 py-2 rounded-lg text-[#61dafb] hover:bg-[#1a1a1a] transition"
+        >
+          Sign Up
+        </Link>
+      </div>
+    </div>
+  );
+}

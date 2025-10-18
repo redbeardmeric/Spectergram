@@ -7,6 +7,7 @@ import LoginUI from "./ui/LoginUI.tsx";
 import SignupUI from "./ui/SignupUI.tsx";
 import FriendListUI from "./ui/FriendListUI.tsx";
 import ChatUI from "./ui/ChatUI.tsx";
+import ChatDashboard from "./ui/ChatDashboard.tsx";
 
 export const rootRoute = createRootRoute({
   component: () => (
@@ -52,3 +53,8 @@ export const chatRoute = createRoute({
   component: ChatUI,
 });
 
+export const dashboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/chat",
+  component: ChatDashboard,
+});
