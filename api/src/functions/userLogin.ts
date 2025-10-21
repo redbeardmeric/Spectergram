@@ -8,6 +8,7 @@ import { resolveAny } from "dns";
 
 interface LoginRequestBody {
     username: string;
+    gmail?: string;
     password: string;
 }
 
@@ -16,18 +17,29 @@ const JWT_SECRET = "samyog";
 
 export async function login(request: HttpRequest, _context: InvocationContext): Promise<HttpResponseInit> {
     try {
-        const { username, password } = (await request.json()) as LoginRequestBody;
+        const { username, gmail, password } = (await request.json()) as LoginRequestBody;
 
-        if (!username || !password) {
-            return { status: 400, body: "Username and password required" };
+        if (!username && !gmail || !password) {
+            return { status: 400, body: "Username or gmail and password required" };
+        }
+        let userQuery;
+        let queryParam;
+
+        // Check whether user is logging in via Gmail or Username
+        if (gmail) {
+            userQuery = 'SELECT * FROM "user" WHERE gmail = $1';
+            queryParam = gmail;
+        } else {
+            userQuery = 'SELECT * FROM "user" WHERE username = $1';
+            queryParam = username!;
         }
 
         // Check if user exists
-        const result = await db.query('SELECT * FROM "user" WHERE username = $1', [username]);
+        const result = await db.query(userQuery, [queryParam]);
         const user = result.rows[0];
         log(user);
         if (!user) {
-            return { status: 401, body: "Invalid username." };
+            return { status: 401, body: "Invalid username or gmail" };
         }
 
         // Compare passwords
@@ -43,7 +55,7 @@ export async function login(request: HttpRequest, _context: InvocationContext): 
         return {
             status: 200,
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: "Login successful", token }),
+            body: JSON.stringify({ message: "Login successful", token, user: {id: user.id, username: user.username, gmail: user.gmail} }),
         };
     } catch (error) {
         console.error(error);
