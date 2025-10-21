@@ -19,7 +19,7 @@ export async function getPool(): Promise<sql.ConnectionPool> {
     throw new Error("SQL_SERVER and SQL_DATABASE must be set when using managed identity");
   }
 
-  const tokenResponse = await credential.getToken("https://database.windows.net//.default");
+  const tokenResponse = await credential.getToken("https://database.windows.net/.default");
   if (!tokenResponse?.token) {
     throw new Error("Failed to acquire access token for Azure SQL");
   }
