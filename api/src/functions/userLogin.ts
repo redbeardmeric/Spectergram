@@ -2,6 +2,7 @@
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { db } from "./db"; 
 
 import { log } from "console";
 import { resolveAny } from "dns";
