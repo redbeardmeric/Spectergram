@@ -8,6 +8,10 @@
 	"files.readonlyInclude": {
 		"**/routeTree.gen.ts": true
 	},
+	"biome.lsp.bin": {
+		"win32-x64": "node_modules/@biomejs/cli-win32-x64/biome.exe",
+		"win32-arm64": "node_modules/@biomejs/cli-win32-x64/biome.exe"
+	},
 	"[javascript]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
