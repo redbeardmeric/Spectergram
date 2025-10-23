@@ -6,43 +6,22 @@ import reportWebVitals from "./reportWebVitals.ts";
 
 // Import routes
 import {
-  Outlet,
-  RouterProvider,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+  rootRoute,
+  indexRoute,
+  loginRoute,
+  signupRoute,
+  dashboardRoute,
+} from "./routes.tsx";
 
-import './styles.css'
-import reportWebVitals from './reportWebVitals.ts'
+//  Build the complete route tree
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  loginRoute,
+  signupRoute,
+  dashboardRoute,
+]);
 
-import App from './App.tsx'
-import MessagingPage from './testDRMessaging.tsx'
-
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
-
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/',
-  component: App,
-})
-
-const messagesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/messages',
-  component: MessagingPage,
-})
-
-const routeTree = rootRoute.addChildren([indexRoute, messagesRoute])
-
+//  Create router
 const router = createRouter({
   routeTree,
   context: {},
