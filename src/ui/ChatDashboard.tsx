@@ -1,23 +1,18 @@
+import type React from "react";
 import { useState } from "react";
 
-type Friend = { id: number; name: string };
-const friends: Friend[] = [
+const friends = [
 	{ id: 1, name: "Sushanta" },
 	{ id: 2, name: "James" },
 	{ id: 3, name: "Dakota" },
 ];
 
-type Message = { id: string; text: string; sender: "friend" | "me" };
-let messageCounter = 0;
-const nextMessageId = () => `msg-${++messageCounter}`;
-const initialMessages: Message[] = [
-	{ id: nextMessageId(), text: "Hey there!", sender: "friend" },
-	{ id: nextMessageId(), text: "Hi 👋", sender: "me" },
-];
-
 export default function ChatDashboard() {
-	const [selectedFriend, setSelectedFriend] = useState<Friend>(friends[0]);
-	const [messages, setMessages] = useState<Message[]>(initialMessages);
+	const [selectedFriend, setSelectedFriend] = useState(friends[0]);
+	const [messages, setMessages] = useState([
+		{ text: "Hey there!", sender: "friend" },
+		{ text: "Hi 👋", sender: "me" },
+	]);
 	const [input, setInput] = useState("");
 
 	// 🧠 Added states for Settings & Edit Profile (NEW)
@@ -28,10 +23,7 @@ export default function ChatDashboard() {
 	const sendMessage = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!input.trim()) return;
-		setMessages((prev) => [
-			...prev,
-			{ id: nextMessageId(), text: input, sender: "me" },
-		]);
+		setMessages([...messages, { text: input, sender: "me" }]);
 		setInput("");
 	};
 
@@ -57,7 +49,6 @@ export default function ChatDashboard() {
 					</div>
 					{/* ⚙️ Settings Button (NEW) */}
 					<button
-						type="button"
 						onClick={() => setShowSettings(true)}
 						className="text-gray-400 hover:text-[#61dafb] transition-all text-xl"
 						aria-label="Open settings"
@@ -75,18 +66,17 @@ export default function ChatDashboard() {
 						Friends
 					</h2>
 					{friends.map((friend) => (
-						<button
+						<div
 							key={friend.id}
-							type="button"
 							onClick={() => setSelectedFriend(friend)}
-							className={`w-full text-left p-3 mb-2 rounded-lg transition-all duration-200 ${
+							className={`p-3 mb-2 rounded-lg cursor-pointer transition-all duration-200 ${
 								selectedFriend.id === friend.id
 									? "bg-[#61dafb] text-black shadow-[0_0_15px_#61dafb]"
 									: "bg-[#121212] hover:bg-[#1b1b1b]"
 							}`}
 						>
 							{friend.name}
-						</button>
+						</div>
 					))}
 				</aside>
 
@@ -94,10 +84,12 @@ export default function ChatDashboard() {
 				<section className="flex-1 flex flex-col bg-[#0a0a0a] relative">
 					{/* Messages */}
 					<div className="flex-1 overflow-y-auto p-6 space-y-4">
-						{messages.map((msg) => (
+						{messages.map((msg, i) => (
 							<div
-								key={msg.id}
-								className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}
+								key={i}
+								className={`flex ${
+									msg.sender === "me" ? "justify-end" : "justify-start"
+								}`}
 							>
 								<div
 									className={`p-3 rounded-xl max-w-xs ${
@@ -139,7 +131,6 @@ export default function ChatDashboard() {
 					<div className="flex justify-between items-center mb-4">
 						<h2 className="text-lg font-semibold glow">Settings</h2>
 						<button
-							type="button"
 							onClick={() => setShowSettings(false)}
 							className="text-gray-400 hover:text-[#61dafb] text-xl"
 							aria-label="Close settings"
@@ -166,7 +157,6 @@ export default function ChatDashboard() {
 						</div>
 
 						<button
-							type="button"
 							onClick={() => setShowEditProfile(true)}
 							className="mt-4 px-4 py-2 bg-[#61dafb] text-black rounded-lg font-medium hover:scale-105 hover:shadow-[0_0_15px_#61dafb] transition-all"
 						>
@@ -218,7 +208,6 @@ export default function ChatDashboard() {
 						/>
 						<input type="file" className="w-full mb-3 text-sm text-gray-400" />
 						<button
-							type="button"
 							className="w-full bg-[#61dafb] text-black font-semibold py-2 rounded-lg hover:shadow-[0_0_20px_#61dafb] transition-all"
 							onClick={() => setShowEditProfile(false)}
 						>

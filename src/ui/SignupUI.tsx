@@ -1,7 +1,5 @@
-import { useMsal } from "@azure/msal-react";
-import type { FormEvent } from "react";
+import type React from "react";
 import { useState } from "react";
-import { loginRequest } from "../auth/msalConfig";
 
 export default function SignupUI() {
 	const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -47,20 +45,9 @@ export default function SignupUI() {
 		if (name === "password") setStrength(evaluatePassword(value));
 	};
 
-	const handleSignup = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+	const handleSignup = (e: React.FormEvent) => {
+		e.preventDefault();
 		console.log("Signing up with:", form);
-	};
-
-	const { instance } = useMsal();
-
-	const signUpWithMicrosoft = async () => {
-		try {
-			await instance.loginPopup(loginRequest);
-			window.location.href = "/dashboard";
-		} catch (err) {
-			console.error("MSAL signup/login failed:", err);
-		}
 	};
 
 	return (
@@ -133,14 +120,6 @@ export default function SignupUI() {
 
 					<button type="submit" className="mt-3">
 						Sign Up
-					</button>
-
-					<button
-						type="button"
-						onClick={signUpWithMicrosoft}
-						className="mt-2 bg-[#2b2b2b] text-white px-4 py-2 rounded-lg"
-					>
-						Sign up with Microsoft
 					</button>
 				</form>
 
