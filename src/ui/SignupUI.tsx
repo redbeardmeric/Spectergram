@@ -41,8 +41,8 @@ export default function SignupUI() {
 		};
 	};
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
 		setForm({ ...form, [name]: value });
 		if (name === "password") setStrength(evaluatePassword(value));
 	};

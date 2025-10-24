@@ -1,3 +1,4 @@
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
@@ -8,11 +9,11 @@ import reportWebVitals from "./reportWebVitals.ts";
 
 // Import routes
 import {
-	rootRoute,
+	dashboardRoute,
 	indexRoute,
 	loginRoute,
+	rootRoute,
 	signupRoute,
-	dashboardRoute,
 } from "./routes.tsx";
 
 //  Build the complete route tree

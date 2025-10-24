@@ -1,10 +1,46 @@
 {
-	"editor.codeActionsOnSave": {
-		"source.organizeImports": true,
-		"source.fixAll": true
+	"files.watcherExclude": {
+		"**/routeTree.gen.ts": true
 	},
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"files.exclue": {
-		"src/routeTree.gen.ts": true
-	}
+	"search.exclude": {
+		"**/routeTree.gen.ts": true
+	},
+	"files.readonlyInclude": {
+		"**/routeTree.gen.ts": true
+	},
+	"biome.lsp.bin": {
+		"win32-x64": "node_modules/@biomejs/cli-win32-x64/biome.exe",
+		"win32-arm64": "node_modules/@biomejs/cli-win32-x64/biome.exe"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit"
+	},
+	"azureFunctions.deploySubpath": "api",
+	"azureFunctions.postDeployTask": "npm install (functions)",
+	"azureFunctions.projectLanguage": "TypeScript",
+	"azureFunctions.projectRuntime": "~4",
+	"debug.internalConsoleOptions": "neverOpen",
+	"azureFunctions.projectLanguageModel": 4,
+	"azureFunctions.preDeployTask": "npm prune (functions)"
 }

@@ -43,8 +43,8 @@ export default function LoginUI() {
 		};
 	};
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
 		if (name === "email") setEmail(value);
 		if (name === "password") {
 			setPassword(value);

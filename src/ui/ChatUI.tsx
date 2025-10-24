@@ -1,29 +1,20 @@
+import type React from "react";
 import { useState } from "react";
-import type { FormEvent } from "react";
-
-type Message = { id: string; text: string; sender: "friend" | "me" };
-let messageCounter = 0;
-const nextMessageId = () => `msg-${++messageCounter}`;
-const initialMessages: Message[] = [
-	{ id: nextMessageId(), text: "Hey there!", sender: "friend" },
-	{ id: nextMessageId(), text: "Hi 👋", sender: "me" },
-];
 
 export default function ChatUI() {
-	const [messages, setMessages] = useState<Message[]>(initialMessages);
+	const [messages, setMessages] = useState([
+		{ text: "Hey there!", sender: "friend" },
+		{ text: "Hi 👋", sender: "me" },
+	]);
 	const [input, setInput] = useState("");
 
-	const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
+	const sendMessage = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const trimmed = input.trim();
-		if (!trimmed) return;
+		if (!input.trim()) return;
 
-		const newMessage: Message = {
-			id: nextMessageId(),
-			text: trimmed,
-			sender: "me",
-		};
-		setMessages((prev) => [...prev, newMessage]);
+		// TODO: Replace this mock with socket or API call
+		const newMessage = { text: input, sender: "me" };
+		setMessages([...messages, newMessage]);
 		setInput("");
 	};
 
@@ -38,9 +29,9 @@ export default function ChatUI() {
 			</header>
 
 			<div className="flex-1 overflow-y-auto p-4 space-y-3">
-				{messages.map((msg) => (
+				{messages.map((msg, i) => (
 					<div
-						key={msg.id}
+						key={i}
 						className={`flex ${
 							msg.sender === "me" ? "justify-end" : "justify-start"
 						}`}

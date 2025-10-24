@@ -7,12 +7,19 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["src/**/*", ".vscode/**/*", "index.html", "vite.config.ts"]
+		"includes": [
+			"**/src/**/*",
+			"**/.vscode/**/*",
+			"**/index.html",
+			"**/vite.config.js",
+			"!**/src/routeTree.gen.ts"
+		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -23,12 +30,5 @@
 		"formatter": {
 			"quoteStyle": "double"
 		}
-	},
-	"overrides": [
-		{
-			"includes": ["src/routeTree.gen.ts"],
-			"formatter": { "enabled": false },
-			"linter": { "enabled": false }
-		}
-	]
+	}
 }

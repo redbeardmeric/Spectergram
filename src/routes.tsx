@@ -2,11 +2,11 @@
 import { createRootRoute, createRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import App from "./App.tsx";
+import ChatDashboard from "./ui/ChatDashboard.tsx";
+import ChatUI from "./ui/ChatUI.tsx";
+import FriendListUI from "./ui/FriendListUI.tsx";
 import LoginUI from "./ui/LoginUI.tsx";
 import SignupUI from "./ui/SignupUI.tsx";
-import FriendListUI from "./ui/FriendListUI.tsx";
-import ChatUI from "./ui/ChatUI.tsx";
-import ChatDashboard from "./ui/ChatDashboard.tsx";
 
 export const rootRoute = createRootRoute({
 	component: () => (

@@ -12,6 +12,55 @@
 	--specter-radius: 0.9rem;
 	--specter-text: #f5f5f5;
 	--specter-muted: #a1a1aa;
+	--specter-bg: #050505;
+	--specter-card: #0a0a0a;
+	--specter-text: #ffffff;
+	--specter-accent: #61dafb;
+	--specter-border: #1f1f1f;
+}
+
+:root {
+	--specter-bg: #050505;
+	--specter-card: #0a0a0a;
+	--specter-text: #ffffff;
+	--specter-accent: #61dafb;
+	--specter-border: #1f1f1f;
+}
+
+/* 🌤️ Frost Light Mode */
+body.light-mode {
+	--specter-bg: #e8f0f8;
+	--specter-card: #ffffff;
+	--specter-text: #111;
+	--specter-accent: #0077ff;
+	--specter-border: #cfd9e3;
+
+	background-color: var(--specter-bg);
+	color: var(--specter-text);
+	transition:
+		background 0.4s ease,
+		color 0.4s ease;
+}
+
+/* Glass and Glow adjustments */
+body.light-mode .glass {
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 25px rgba(0, 119, 255, 0.2);
+}
+
+body.light-mode .glow {
+	color: var(--specter-accent);
+	text-shadow: 0 0 8px rgba(0, 119, 255, 0.5);
+}
+
+body,
+.glass,
+input,
+button {
+	transition:
+		background 0.3s ease,
+		color 0.3s ease,
+		box-shadow 0.3s ease;
 }
 
 /* Background with animated gradient & particles */
@@ -63,6 +112,115 @@ body::after {
 }
 .glass:hover {
 	box-shadow: 0 0 35px rgba(97, 218, 251, 0.25);
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Password strength glowing animation */
+.strength-bar {
+	position: relative;
+	overflow: hidden;
+	border-radius: 9999px;
+}
+.strength-bar::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.4),
+		transparent,
+		rgba(255, 255, 255, 0.4)
+	);
+	background-size: 200% 100%;
+	animation: shimmer 2.5s infinite linear;
+	mix-blend-mode: overlay;
+	opacity: 0.4;
+}
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
+}
+
+/* Animated shimmer bar */
+.strength-bar {
+	position: relative;
+	overflow: hidden;
+	border-radius: 9999px;
+}
+.strength-bar::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.4),
+		transparent,
+		rgba(255, 255, 255, 0.4)
+	);
+	background-size: 200% 100%;
+	animation: shimmer 2.5s infinite linear;
+	mix-blend-mode: overlay;
+	opacity: 0.4;
+}
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
+}
+
+/* 🔮 Neon Header Glow */
+.glow {
+	color: #61dafb;
+	text-shadow:
+		0 0 10px #61dafb,
+		0 0 20px #61dafb,
+		0 0 40px rgba(97, 218, 251, 0.5);
+	animation: glowPulse 3s infinite ease-in-out alternate;
+}
+@keyframes glowPulse {
+	0% {
+		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
+	}
+	100% {
+		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
+	}
+}
+
+/* ✨ Smooth fade-in for bubbles and components */
+.fade-in {
+	animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 💫 Message bubble hover pop */
+.bg-gradient-to-br:hover {
+	transform: scale(1.03);
+	transition: transform 0.2s ease;
 }
 
 /* Neon glow text */
@@ -384,4 +542,112 @@ button:hover {
 .bg-gradient-to-br:hover {
 	transform: scale(1.03);
 	transition: transform 0.2s ease;
+}
+
+/* 🧭 Settings Drawer Animation */
+.settings-drawer {
+	animation: slideIn 0.4s ease-out forwards;
+}
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes orbitSpin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes pulseGlow {
+	0% {
+		box-shadow:
+			0 0 10px rgba(97, 218, 251, 0.3),
+			0 0 25px rgba(97, 218, 251, 0.1);
+		transform: scale(0.95);
+	}
+	100% {
+		box-shadow:
+			0 0 25px rgba(97, 218, 251, 0.6),
+			0 0 45px rgba(97, 218, 251, 0.3);
+		transform: scale(1.05);
+	}
+}
+
+.specter-orb::after {
+	content: "";
+	position: absolute;
+	inset: -5px;
+	border-radius: 50%;
+	background: radial-gradient(
+		circle,
+		rgba(97, 218, 251, 0.15),
+		transparent 70%
+	);
+	filter: blur(6px);
+}
+
+/* 🔮 Header Glow */
+.glow {
+	color: #61dafb;
+	text-shadow:
+		0 0 10px #61dafb,
+		0 0 20px #61dafb,
+		0 0 40px rgba(97, 218, 251, 0.5);
+	animation: glowPulse 3s infinite ease-in-out alternate;
+}
+
+@keyframes glowPulse {
+	0% {
+		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
+	}
+	100% {
+		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
+	}
+}
+
+/* ✨ Smooth fade-in for messages and layout */
+.fade-in {
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 💫 Hover pop for chat bubbles */
+.bg-gradient-to-br:hover {
+	transform: scale(1.03);
+	transition: transform 0.2s ease;
+}
+
+/* 🧭 Settings Drawer Animation */
+.settings-drawer {
+	animation: slideIn 0.4s ease-out forwards;
+}
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
