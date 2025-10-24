@@ -1,6 +1,6 @@
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
 import bcrypt from "bcryptjs";
-import { getPool } from "./db";
+import { getPool } from "../db";
 import * as sql from "mssql";
 
 interface LoginRequestBody {
