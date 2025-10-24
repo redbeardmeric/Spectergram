@@ -2,386 +2,450 @@
 
 /* 🌌 Spectergram Advanced Glow Theme */
 :root {
-  --specter-bg: #050505;
-  --specter-surface: #101010;
-  --specter-panel: #181818;
-  --specter-border: #252525;
-  --specter-accent: #61dafb;
-  --specter-accent2: #7ee7ff;
-  --specter-accent3: #3fa9f5;
-  --specter-radius: 0.9rem;
-  --specter-text: #f5f5f5;
-  --specter-muted: #a1a1aa;
-  --specter-bg: #050505;
-  --specter-card: #0a0a0a;
-  --specter-text: #ffffff;
-  --specter-accent: #61dafb;
-  --specter-border: #1f1f1f;
+	--specter-bg: #050505;
+	--specter-surface: #101010;
+	--specter-panel: #181818;
+	--specter-border: #252525;
+	--specter-accent: #61dafb;
+	--specter-accent2: #7ee7ff;
+	--specter-accent3: #3fa9f5;
+	--specter-radius: 0.9rem;
+	--specter-text: #f5f5f5;
+	--specter-muted: #a1a1aa;
+	--specter-bg: #050505;
+	--specter-card: #0a0a0a;
+	--specter-text: #ffffff;
+	--specter-accent: #61dafb;
+	--specter-border: #1f1f1f;
 }
 
-
 :root {
-  --specter-bg: #050505;
-  --specter-card: #0a0a0a;
-  --specter-text: #ffffff;
-  --specter-accent: #61dafb;
-  --specter-border: #1f1f1f;
+	--specter-bg: #050505;
+	--specter-card: #0a0a0a;
+	--specter-text: #ffffff;
+	--specter-accent: #61dafb;
+	--specter-border: #1f1f1f;
 }
 
 /* 🌤️ Frost Light Mode */
 body.light-mode {
-  --specter-bg: #e8f0f8;
-  --specter-card: #ffffff;
-  --specter-text: #111;
-  --specter-accent: #0077ff;
-  --specter-border: #cfd9e3;
+	--specter-bg: #e8f0f8;
+	--specter-card: #ffffff;
+	--specter-text: #111;
+	--specter-accent: #0077ff;
+	--specter-border: #cfd9e3;
 
-  background-color: var(--specter-bg);
-  color: var(--specter-text);
-  transition: background 0.4s ease, color 0.4s ease;
+	background-color: var(--specter-bg);
+	color: var(--specter-text);
+	transition:
+		background 0.4s ease,
+		color 0.4s ease;
 }
 
 /* Glass and Glow adjustments */
 body.light-mode .glass {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 25px rgba(0, 119, 255, 0.2);
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 25px rgba(0, 119, 255, 0.2);
 }
 
 body.light-mode .glow {
-  color: var(--specter-accent);
-  text-shadow: 0 0 8px rgba(0, 119, 255, 0.5);
+	color: var(--specter-accent);
+	text-shadow: 0 0 8px rgba(0, 119, 255, 0.5);
 }
 
-body, .glass, input, button {
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+body,
+.glass,
+input,
+button {
+	transition:
+		background 0.3s ease,
+		color 0.3s ease,
+		box-shadow 0.3s ease;
 }
-
 
 /* Background with animated gradient & particles */
 body {
-  background: radial-gradient(circle at 20% 20%, #0d0d0d, #000 80%);
-  color: var(--specter-text);
-  font-family: "Inter", "Poppins", sans-serif;
-  overflow: hidden;
-  animation: bgShift 20s ease-in-out infinite alternate;
+	background: radial-gradient(circle at 20% 20%, #0d0d0d, #000 80%);
+	color: var(--specter-text);
+	font-family: "Inter", "Poppins", sans-serif;
+	overflow: hidden;
+	animation: bgShift 20s ease-in-out infinite alternate;
 }
 @keyframes bgShift {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 100% 100%;
+	}
 }
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, rgba(97,218,251,0.05) 1px, transparent 1px);
-  background-size: 5px 5px;
-  animation: moveGrid 30s linear infinite;
-  pointer-events: none;
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: radial-gradient(
+		circle,
+		rgba(97, 218, 251, 0.05) 1px,
+		transparent 1px
+	);
+	background-size: 5px 5px;
+	animation: moveGrid 30s linear infinite;
+	pointer-events: none;
 }
 @keyframes moveGrid {
-  from { background-position: 0 0; }
-  to { background-position: 150px 150px; }
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 150px 150px;
+	}
 }
 
 /* Universal glass effect */
 .glass {
-  backdrop-filter: blur(18px);
-  background: rgba(20, 20, 20, 0.55);
-  border: 1px solid rgba(97, 218, 251, 0.08);
-  border-radius: var(--specter-radius);
-  box-shadow: 0 0 30px rgba(97, 218, 251, 0.15);
-  transition: 0.4s all;
+	backdrop-filter: blur(18px);
+	background: rgba(20, 20, 20, 0.55);
+	border: 1px solid rgba(97, 218, 251, 0.08);
+	border-radius: var(--specter-radius);
+	box-shadow: 0 0 30px rgba(97, 218, 251, 0.15);
+	transition: 0.4s all;
 }
 .glass:hover {
-  box-shadow: 0 0 35px rgba(97, 218, 251, 0.25);
+	box-shadow: 0 0 35px rgba(97, 218, 251, 0.25);
 }
 
 /* Neon glow text */
 .glow {
-  color: var(--specter-accent);
-  text-shadow: 0 0 15px rgba(97, 218, 251, 0.6), 0 0 30px rgba(97, 218, 251, 0.3);
-  animation: flicker 3s infinite alternate ease-in-out;
+	color: var(--specter-accent);
+	text-shadow:
+		0 0 15px rgba(97, 218, 251, 0.6),
+		0 0 30px rgba(97, 218, 251, 0.3);
+	animation: flicker 3s infinite alternate ease-in-out;
 }
 @keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.4; }
+	0%,
+	19%,
+	21%,
+	23%,
+	25%,
+	54%,
+	56%,
+	100% {
+		opacity: 1;
+	}
+	20%,
+	24%,
+	55% {
+		opacity: 0.4;
+	}
 }
 
 /* Inputs with floating glow */
 input {
-  background: rgba(25, 25, 25, 0.9);
-  border: 1px solid var(--specter-border);
-  color: var(--specter-text);
-  border-radius: var(--specter-radius);
-  padding: 0.8rem 1rem;
-  transition: all 0.3s ease;
+	background: rgba(25, 25, 25, 0.9);
+	border: 1px solid var(--specter-border);
+	color: var(--specter-text);
+	border-radius: var(--specter-radius);
+	padding: 0.8rem 1rem;
+	transition: all 0.3s ease;
 }
 input:focus {
-  border-color: var(--specter-accent);
-  box-shadow: 0 0 12px rgba(97, 218, 251, 0.4);
-  outline: none;
+	border-color: var(--specter-accent);
+	box-shadow: 0 0 12px rgba(97, 218, 251, 0.4);
+	outline: none;
 }
 
 /* Buttons with neon edge */
 button {
-  background: linear-gradient(90deg, var(--specter-accent), var(--specter-accent3));
-  color: #000;
-  font-weight: 600;
-  border-radius: var(--specter-radius);
-  padding: 0.6rem 1.8rem;
-  box-shadow: 0 0 15px rgba(97, 218, 251, 0.35);
-  position: relative;
-  overflow: hidden;
-  transition: 0.3s ease;
+	background: linear-gradient(
+		90deg,
+		var(--specter-accent),
+		var(--specter-accent3)
+	);
+	color: #000;
+	font-weight: 600;
+	border-radius: var(--specter-radius);
+	padding: 0.6rem 1.8rem;
+	box-shadow: 0 0 15px rgba(97, 218, 251, 0.35);
+	position: relative;
+	overflow: hidden;
+	transition: 0.3s ease;
 }
 button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  transition: 0.4s;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		120deg,
+		transparent,
+		rgba(255, 255, 255, 0.4),
+		transparent
+	);
+	transition: 0.4s;
 }
 button:hover::before {
-  left: 100%;
+	left: 100%;
 }
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(97, 218, 251, 0.5);
+	transform: scale(1.05);
+	box-shadow: 0 0 25px rgba(97, 218, 251, 0.5);
 }
 
 /* Chat bubbles with glow */
 .bubble-me {
-  background: linear-gradient(135deg, var(--specter-accent), var(--specter-accent3));
-  color: #000;
-  border-radius: 1rem 1rem 0 1rem;
-  padding: 0.7rem 1rem;
-  box-shadow: 0 0 20px rgba(97, 218, 251, 0.4);
+	background: linear-gradient(
+		135deg,
+		var(--specter-accent),
+		var(--specter-accent3)
+	);
+	color: #000;
+	border-radius: 1rem 1rem 0 1rem;
+	padding: 0.7rem 1rem;
+	box-shadow: 0 0 20px rgba(97, 218, 251, 0.4);
 }
 .bubble-friend {
-  background: var(--specter-surface);
-  color: var(--specter-text);
-  border-radius: 1rem 1rem 1rem 0;
-  padding: 0.7rem 1rem;
+	background: var(--specter-surface);
+	color: var(--specter-text);
+	border-radius: 1rem 1rem 1rem 0;
+	padding: 0.7rem 1rem;
 }
 
 /* Chat layout refinement */
 .chat-sidebar {
-  border-right: 1px solid var(--specter-border);
-  background: rgba(15, 15, 15, 0.85);
+	border-right: 1px solid var(--specter-border);
+	background: rgba(15, 15, 15, 0.85);
 }
 .chat-input input {
-  background: var(--specter-panel);
-  color: var(--specter-text);
-  border: 1px solid var(--specter-border);
+	background: var(--specter-panel);
+	color: var(--specter-text);
+	border: 1px solid var(--specter-border);
 }
 .chat-input input:focus {
-  border-color: var(--specter-accent);
-  box-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
+	border-color: var(--specter-accent);
+	box-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
 }
 
 /* Smooth entrance */
 .fade-in {
-  animation: fadeIn 0.6s ease-in-out forwards;
+	animation: fadeIn 0.6s ease-in-out forwards;
 }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
-
 
 /* Password strength glowing animation */
 .strength-bar {
-  position: relative;
-  overflow: hidden;
-  border-radius: 9999px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 9999px;
 }
 .strength-bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.4),
-    transparent,
-    rgba(255, 255, 255, 0.4)
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2.5s infinite linear;
-  mix-blend-mode: overlay;
-  opacity: 0.4;
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.4),
+		transparent,
+		rgba(255, 255, 255, 0.4)
+	);
+	background-size: 200% 100%;
+	animation: shimmer 2.5s infinite linear;
+	mix-blend-mode: overlay;
+	opacity: 0.4;
 }
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
 }
-
 
 /* Animated shimmer bar */
 .strength-bar {
-  position: relative;
-  overflow: hidden;
-  border-radius: 9999px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 9999px;
 }
 .strength-bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.4),
-    transparent,
-    rgba(255, 255, 255, 0.4)
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2.5s infinite linear;
-  mix-blend-mode: overlay;
-  opacity: 0.4;
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.4),
+		transparent,
+		rgba(255, 255, 255, 0.4)
+	);
+	background-size: 200% 100%;
+	animation: shimmer 2.5s infinite linear;
+	mix-blend-mode: overlay;
+	opacity: 0.4;
 }
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
 }
-
 
 /* 🔮 Neon Header Glow */
 .glow {
-  color: #61dafb;
-  text-shadow: 0 0 10px #61dafb, 0 0 20px #61dafb, 0 0 40px rgba(97, 218, 251, 0.5);
-  animation: glowPulse 3s infinite ease-in-out alternate;
+	color: #61dafb;
+	text-shadow:
+		0 0 10px #61dafb,
+		0 0 20px #61dafb,
+		0 0 40px rgba(97, 218, 251, 0.5);
+	animation: glowPulse 3s infinite ease-in-out alternate;
 }
 @keyframes glowPulse {
-  0% {
-    text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-  }
-  100% {
-    text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-  }
+	0% {
+		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
+	}
+	100% {
+		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
+	}
 }
 
 /* ✨ Smooth fade-in for bubbles and components */
 .fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+	animation: fadeIn 0.5s ease-in-out;
 }
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* 💫 Message bubble hover pop */
 .bg-gradient-to-br:hover {
-  transform: scale(1.03);
-  transition: transform 0.2s ease;
+	transform: scale(1.03);
+	transition: transform 0.2s ease;
 }
-
 
 /* 🌌 Spectergram Animated Orb Logo */
 .specter-orb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #61dafb, #0078ff 60%, transparent 80%);
-  box-shadow: 0 0 15px rgba(97, 218, 251, 0.6), 0 0 30px rgba(97, 218, 251, 0.3);
-  animation: orbitSpin 6s linear infinite, pulseGlow 2.5s ease-in-out infinite alternate;
-  position: relative;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: radial-gradient(circle, #61dafb, #0078ff 60%, transparent 80%);
+	box-shadow:
+		0 0 15px rgba(97, 218, 251, 0.6),
+		0 0 30px rgba(97, 218, 251, 0.3);
+	animation:
+		orbitSpin 6s linear infinite,
+		pulseGlow 2.5s ease-in-out infinite alternate;
+	position: relative;
 }
 
 @keyframes orbitSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 @keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 10px rgba(97, 218, 251, 0.3),
-      0 0 25px rgba(97, 218, 251, 0.1);
-    transform: scale(0.95);
-  }
-  100% {
-    box-shadow: 0 0 25px rgba(97, 218, 251, 0.6),
-      0 0 45px rgba(97, 218, 251, 0.3);
-    transform: scale(1.05);
-  }
+	0% {
+		box-shadow:
+			0 0 10px rgba(97, 218, 251, 0.3),
+			0 0 25px rgba(97, 218, 251, 0.1);
+		transform: scale(0.95);
+	}
+	100% {
+		box-shadow:
+			0 0 25px rgba(97, 218, 251, 0.6),
+			0 0 45px rgba(97, 218, 251, 0.3);
+		transform: scale(1.05);
+	}
 }
 
 .specter-orb::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(97, 218, 251, 0.15), transparent 70%);
-  filter: blur(6px);
+	content: "";
+	position: absolute;
+	inset: -5px;
+	border-radius: 50%;
+	background: radial-gradient(
+		circle,
+		rgba(97, 218, 251, 0.15),
+		transparent 70%
+	);
+	filter: blur(6px);
 }
 
 /* 🔮 Header Glow */
 .glow {
-  color: #61dafb;
-  text-shadow: 0 0 10px #61dafb, 0 0 20px #61dafb, 0 0 40px rgba(97, 218, 251, 0.5);
-  animation: glowPulse 3s infinite ease-in-out alternate;
+	color: #61dafb;
+	text-shadow:
+		0 0 10px #61dafb,
+		0 0 20px #61dafb,
+		0 0 40px rgba(97, 218, 251, 0.5);
+	animation: glowPulse 3s infinite ease-in-out alternate;
 }
 
 @keyframes glowPulse {
-  0% {
-    text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-  }
-  100% {
-    text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-  }
+	0% {
+		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
+	}
+	100% {
+		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
+	}
 }
 
 /* ✨ Smooth fade-in for messages and layout */
 .fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+	animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* 💫 Hover pop for chat bubbles */
 .bg-gradient-to-br:hover {
-  transform: scale(1.03);
-  transition: transform 0.2s ease;
+	transform: scale(1.03);
+	transition: transform 0.2s ease;
 }
 
 /* 🧭 Settings Drawer Animation */
 .settings-drawer {
-  animation: slideIn 0.4s ease-out forwards;
+	animation: slideIn 0.4s ease-out forwards;
 }
 @keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
-
