@@ -1,6 +1,6 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 
-// MSAL configuration uses Vite env variables. 
+// MSAL configuration uses Vite env variables.
 const clientId = import.meta.env.VITE_MSAL_CLIENT_ID ?? "";
 const tenantId = import.meta.env.VITE_MSAL_TENANT_ID ?? "common";
 

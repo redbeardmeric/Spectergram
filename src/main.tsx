@@ -1,8 +1,7 @@
+import { MsalProvider } from "@azure/msal-react";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { MsalProvider } from "@azure/msal-react";
 import { msalInstance } from "./auth/msalConfig";
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
@@ -46,10 +45,10 @@ if (rootElement && !rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<StrictMode>
-				<MsalProvider instance={msalInstance}>
-					<RouterProvider router={router} />
-				</MsalProvider>
-			</StrictMode>,
+			<MsalProvider instance={msalInstance}>
+				<RouterProvider router={router} />
+			</MsalProvider>
+		</StrictMode>,
 	);
 }
 
