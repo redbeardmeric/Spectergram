@@ -57,37 +57,3 @@ export const dashboardRoute = createRoute({
   path: "/chat",
   component: ChatDashboard,
 });
-
-// login route
-export const loginRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/login",
-	component: LoginUI,
-});
-
-// signup route
-export const signupRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/signup",
-	component: SignupUI,
-});
-
-// friend list route
-export const friendsRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/friends",
-	component: FriendListUI,
-});
-
-// chat route
-export const chatRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/chat",
-	component: ChatUI,
-});
-
-export const dashboardRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/chat",
-	component: ChatDashboard,
-});
