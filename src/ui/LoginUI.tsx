@@ -1,6 +1,6 @@
-import { useState } from "react";
-import type { ChangeEvent, FormEvent } from "react";
 import { useMsal } from "@azure/msal-react";
+import type { FormEvent } from "react";
+import { useState } from "react";
 import { loginRequest } from "../auth/msalConfig";
 
 export default function LoginUI() {
