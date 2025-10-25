@@ -2,9 +2,11 @@ import type React from "react";
 import { useState } from "react";
 
 export default function ChatUI() {
+	const genId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
 	const [messages, setMessages] = useState([
-		{ text: "Hey there!", sender: "friend" },
-		{ text: "Hi 👋", sender: "me" },
+		{ id: genId(), text: "Hey there!", sender: "friend" },
+		{ id: genId(), text: "Hi 👋", sender: "me" },
 	]);
 	const [input, setInput] = useState("");
 
@@ -13,7 +15,7 @@ export default function ChatUI() {
 		if (!input.trim()) return;
 
 		// TODO: Replace this mock with socket or API call
-		const newMessage = { text: input, sender: "me" };
+		const newMessage = { id: genId(), text: input, sender: "me" };
 		setMessages([...messages, newMessage]);
 		setInput("");
 	};
@@ -29,12 +31,10 @@ export default function ChatUI() {
 			</header>
 
 			<div className="flex-1 overflow-y-auto p-4 space-y-3">
-				{messages.map((msg, i) => (
+				{messages.map((msg) => (
 					<div
-						key={i}
-						className={`flex ${
-							msg.sender === "me" ? "justify-end" : "justify-start"
-						}`}
+						key={msg.id}
+						className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}
 					>
 						<div
 							className={`p-3 rounded-lg max-w-xs ${

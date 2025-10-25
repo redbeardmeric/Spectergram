@@ -5,27 +5,17 @@
 	--specter-bg: #050505;
 	--specter-surface: #101010;
 	--specter-panel: #181818;
-	--specter-border: #252525;
+	--specter-border: #1f1f1f;
 	--specter-accent: #61dafb;
 	--specter-accent2: #7ee7ff;
 	--specter-accent3: #3fa9f5;
 	--specter-radius: 0.9rem;
-	--specter-text: #f5f5f5;
-	--specter-muted: #a1a1aa;
-	--specter-bg: #050505;
-	--specter-card: #0a0a0a;
 	--specter-text: #ffffff;
-	--specter-accent: #61dafb;
-	--specter-border: #1f1f1f;
+	--specter-muted: #a1a1aa;
+	--specter-card: #0a0a0a;
 }
 
-:root {
-	--specter-bg: #050505;
-	--specter-card: #0a0a0a;
-	--specter-text: #ffffff;
-	--specter-accent: #61dafb;
-	--specter-border: #1f1f1f;
-}
+/* Consolidated root variables (duplicates removed) */
 
 /* 🌤️ Frost Light Mode */
 body.light-mode {
@@ -43,14 +33,35 @@ body.light-mode {
 }
 
 /* Glass and Glow adjustments */
+/* Base glass effect - declared before light-mode overrides to avoid descending specificity */
+.glass {
+	backdrop-filter: blur(18px);
+	background: rgba(20, 20, 20, 0.55);
+	border: 1px solid rgba(97, 218, 251, 0.08);
+	border-radius: var(--specter-radius);
+	box-shadow: 0 0 30px rgba(97, 218, 251, 0.15);
+	transition: 0.4s all;
+}
+
 body.light-mode .glass {
 	background: rgba(255, 255, 255, 0.8);
 	box-shadow: 0 0 25px rgba(0, 119, 255, 0.2);
 }
 
 body.light-mode .glow {
+	/* base glow is declared above; this is the light-mode override */
 	color: var(--specter-accent);
 	text-shadow: 0 0 8px rgba(0, 119, 255, 0.5);
+}
+
+/* Base glow styles (declared before light-mode overrides to avoid descending specificity) */
+.glow {
+	color: #61dafb;
+	text-shadow:
+		0 0 10px #61dafb,
+		0 0 20px #61dafb,
+		0 0 40px rgba(97, 218, 251, 0.5);
+	animation: glowPulse 3s infinite ease-in-out alternate;
 }
 
 body,
