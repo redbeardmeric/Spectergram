@@ -1,5 +1,7 @@
+import { useMsal } from "@azure/msal-react";
 import type React from "react";
 import { useState } from "react";
+import { loginRequest } from "../auth/msalConfig";
 
 export default function SignupUI() {
 	const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -8,6 +10,9 @@ export default function SignupUI() {
 		color: "",
 		gradient: "",
 	});
+
+	const { instance } = useMsal();
+	const hasMsalClient = Boolean(import.meta.env.VITE_MSAL_CLIENT_ID);
 
 	const evaluatePassword = (pwd: string) => {
 		const conditions = [
@@ -121,6 +126,25 @@ export default function SignupUI() {
 					<button type="submit" className="mt-3">
 						Sign Up
 					</button>
+
+					{hasMsalClient && (
+						/* Entra / Microsoft sign-in (MSAL) */
+						<div className="mt-4 text-center">
+							<button
+								type="button"
+								className="mt-2 px-4 py-2 bg-[#61dafb] text-black rounded-lg"
+								onClick={async () => {
+									try {
+										await instance.loginPopup(loginRequest);
+									} catch (err) {
+										console.error("MSAL signup/login failed", err);
+									}
+								}}
+							>
+								Sign in with Microsoft
+							</button>
+						</div>
+					)}
 				</form>
 
 				<p className="text-center text-sm text-gray-400 mt-5">
