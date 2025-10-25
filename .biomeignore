@@ -1,0 +1,11 @@
+# Ignore build artifacts and dependencies for Biome linting
+dist/
+api/dist/
+node_modules/
+coverage/
+build/
+
+# Local environment files
+.env
+.env.*
+.vscode/
