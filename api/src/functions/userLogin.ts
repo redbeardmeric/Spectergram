@@ -1,29 +1,29 @@
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
 import bcrypt from "bcryptjs";
-import { getPool } from "./db";
+import { getPool } from "../db";
 import * as sql from "mssql";
 
 interface LoginRequestBody {
-  gmail: string;
+  username: string;
   password: string;
 }
 
 export async function login(request: HttpRequest, _context: InvocationContext): Promise<HttpResponseInit> {
   try {
-    const { gmail, password } = (await request.json()) as LoginRequestBody;
+    const { username, password } = (await request.json()) as LoginRequestBody;
 
-    if (!gmail || !password) {
+    if (!username || !password) {
       return { status: 400, body: "Gmail and password required" };
     }
 
     const pool = await getPool();
     const userResult = await pool
       .request()
-      .input("gmail", sql.VarChar, gmail)
-      .query("SELECT * FROM [user] WHERE gmail = @gmail");
+      .input("username", sql.VarChar, username)
+      .query("SELECT * FROM [user] WHERE username = @username");
 
     if (userResult.recordset.length === 0) {
-      return { status: 401, body: "Invalid Gmail or password" };
+      return { status: 401, body: "Invalid username or password" };
     }
 
     const user = userResult.recordset[0];

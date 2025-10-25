@@ -1,11 +1,11 @@
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
 import bcrypt from "bcryptjs";
-import  { getPool }  from "./db";
+import  { getPool }  from "../db";
 import * as sql from "mssql";
 
 interface RegisterRequestBody {
   username: string;
-  gmail: string;
+  gmail?: string;
   password: string;
 }
 
@@ -13,13 +13,15 @@ export async function register(request: HttpRequest, _context: InvocationContext
   try {
     const { username, gmail, password } = (await request.json()) as RegisterRequestBody;
 
-    if (!username || !gmail || !password) {
-      return { status: 400, body: "Username, Gmail, and Password are required" };
+    if (!username || !password) {
+      return { status: 400, body: "Username or Gmail, and Password are required" };
     }
 
+    if (gmail) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!gmailRegex.test(gmail)) {
       return { status: 400, body: "Please provide a valid Gmail address" };
+    }
     }
 
     const pool = await getPool();
@@ -28,11 +30,10 @@ export async function register(request: HttpRequest, _context: InvocationContext
     const existing = await pool
       .request()
       .input("username", sql.VarChar, username)
-      .input("gmail", sql.VarChar, gmail)
-      .query("SELECT * FROM [user] WHERE username = @username OR gmail = @gmail");
+      .query("SELECT * FROM [user] WHERE username = @username");
 
     if (existing.recordset.length > 0) {
-      return { status: 409, body: "Username or Gmail already exists" };
+      return { status: 409, body: "Username already exists" };
     }
 
     // Hash and insert
@@ -40,9 +41,8 @@ export async function register(request: HttpRequest, _context: InvocationContext
     await pool
       .request()
       .input("username", sql.VarChar, username)
-      .input("gmail", sql.VarChar, gmail)
       .input("password", sql.VarChar, hashedPassword)
-      .query("INSERT INTO [user] (username, gmail, password) VALUES (@username, @gmail, @password)");
+      .query("INSERT INTO [user] (username, password) VALUES (@username, @password)");
 
     return { status: 201, body: "User registered successfully" };
   } catch (error) {
