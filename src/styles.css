@@ -555,36 +555,130 @@ button,
 	}
 }
 
-
 .waveform div {
-  animation: bounce 1s infinite ease-in-out;
+	animation: bounce 1s infinite ease-in-out;
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: scaleY(0.6);
-  }
-  50% {
-    transform: scaleY(1);
-  }
+	0%,
+	100% {
+		transform: scaleY(0.6);
+	}
+	50% {
+		transform: scaleY(1);
+	}
 }
 
 .specter-orb {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #61dafb, #007acc);
-  box-shadow: 0 0 15px #61dafb;
-  animation: pulse 1.5s infinite alternate;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: radial-gradient(circle, #61dafb, #007acc);
+	box-shadow: 0 0 15px #61dafb;
+	animation: pulse 1.5s infinite alternate;
 }
 
 @keyframes pulse {
-  from {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  to {
-    transform: scale(1.2);
-    opacity: 0.6;
-  }
+	from {
+		transform: scale(1);
+		opacity: 0.9;
+	}
+	to {
+		transform: scale(1.2);
+		opacity: 0.6;
+	}
+}
+
+/*  Smooth gradient motion */
+@keyframes gradientMove {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+.animate-gradientMove {
+	background-size: 400% 400%;
+	animation: gradientMove 12s ease infinite;
+}
+
+/* 💡 Logo glow pulse */
+@keyframes glow {
+	0%,
+	100% {
+		text-shadow:
+			0 0 10px #61dafb,
+			0 0 20px #61dafb;
+	}
+	50% {
+		text-shadow:
+			0 0 25px #61dafb,
+			0 0 40px #61dafb;
+	}
+}
+.animate-glow {
+	animation: glow 3s ease-in-out infinite;
+}
+
+/* 🌟 Fade-in effect */
+.fade-in {
+	opacity: 0;
+	transform: translateY(15px);
+	animation: fadeIn 1.2s ease forwards;
+}
+@keyframes fadeIn {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 🌌 Floating particles */
+.floating-dot {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: #61dafb;
+	border-radius: 50%;
+	opacity: 0.4;
+	animation: float 10s infinite ease-in-out;
+}
+.floating-dot:nth-child(odd) {
+	width: 5px;
+	height: 5px;
+	opacity: 0.3;
+}
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0) translateX(0);
+	}
+	25% {
+		transform: translateY(-40px) translateX(20px);
+	}
+	50% {
+		transform: translateY(-80px) translateX(-20px);
+	}
+	75% {
+		transform: translateY(-40px) translateX(10px);
+	}
+}
+
+/* 🌠 Button sweep effect */
+.btn-sweep {
+	position: absolute;
+	top: 0;
+	left: -75%;
+	width: 50%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.25);
+	transform: skewX(-25deg);
+	transition: left 0.5s;
+}
+a:hover .btn-sweep {
+	left: 125%;
 }
