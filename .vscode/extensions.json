@@ -1,3 +1,6 @@
 {
-	"recommendations": ["ms-azuretools.vscode-azurefunctions", "biomejs.biome"]
+	"recommendations": [
+		"biomejs.biome",
+		"ms-vscode.vscode-typescript-tslint-plugin"
+	]
 }
