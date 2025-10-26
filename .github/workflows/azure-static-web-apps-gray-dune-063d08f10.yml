@@ -52,8 +52,8 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/dist" # Pre-built app directory
           api_location: "" # API deployed separately to Azure Functions
-          output_location: "" # Already built, no further output
-          skip_app_build: true
+          output_location: "/dist" # Already built, no further output
+          skip_app_build: false
           github_id_token: ${{ steps.idtoken.outputs.result }}
           deployment_environment: "production"
           ###### End of Repository/Build Configurations ######
