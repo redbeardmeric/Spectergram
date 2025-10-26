@@ -1,3 +1,5 @@
+import { getApiUrl } from "../config/api";
+
 // Helper to get token from localStorage
 function getAuthToken(): string | null {
 	return localStorage.getItem("authToken");
@@ -5,7 +7,7 @@ function getAuthToken(): string | null {
 
 // Helper to make authenticated requests
 async function fetchWithAuth(
-	input: RequestInfo,
+	path: string,
 	init?: RequestInit,
 ): Promise<Response> {
 	const token = getAuthToken();
@@ -17,7 +19,7 @@ async function fetchWithAuth(
 	headers.set("Authorization", `Bearer ${token}`);
 	headers.set("Content-Type", "application/json");
 
-	return fetch(input, {
+	return fetch(getApiUrl(path), {
 		...init,
 		headers,
 	});
@@ -28,7 +30,7 @@ export async function login(
 	gmail: string,
 	password: string,
 ): Promise<{ token: string; user: any }> {
-	const res = await fetch("/api/login", {
+	const res = await fetch(getApiUrl("/api/login"), {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ gmail, password }),
@@ -52,7 +54,7 @@ export async function register(
 	gmail: string,
 	password: string,
 ): Promise<void> {
-	const res = await fetch("/api/register", {
+	const res = await fetch(getApiUrl("/api/register"), {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ username, gmail, password }),
