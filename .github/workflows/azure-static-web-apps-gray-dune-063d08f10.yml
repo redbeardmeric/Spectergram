@@ -50,9 +50,9 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
+          app_location: "/dist" # Pre-built app directory
           api_location: "" # API deployed separately to Azure Functions
-          output_location: "dist" # Built app content directory - optional
+          output_location: "" # Already built, no further output
           skip_app_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
           deployment_environment: "production"
