@@ -30,8 +30,16 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install frontend dependencies
         run: npm ci
+      - name: Clean dist folder
+        run: rm -rf dist
       - name: Build frontend
         run: npm run build
+      - name: Verify build output
+        run: |
+          echo "Checking dist folder contents:"
+          ls -la dist/
+          echo "Checking index.html:"
+          cat dist/index.html | grep -E "(title|description)"
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

@@ -30,8 +30,16 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install frontend dependencies
         run: npm ci
+      - name: Clean dist folder
+        run: rm -rf dist
       - name: Build frontend
         run: npm run build
+      - name: Verify build output
+        run: |
+          echo "Checking dist folder contents:"
+          ls -la dist/
+          echo "Checking index.html:"
+          cat dist/index.html | grep -E "(title|description)"
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
