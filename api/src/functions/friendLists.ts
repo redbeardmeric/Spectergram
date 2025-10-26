@@ -1,60 +1,93 @@
-import {
-    app,
-    type HttpRequest,
-    type HttpResponseInit,
-    type InvocationContext,
-} from "@azure/functions";
-import jwt from "jsonwebtoken";
+import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
+import { getPool } from "../db";
+import * as sql from "mssql";
 
 interface FriendRequestBody {
-    friendUsername: string;
+  username: string;
+  friend: string;
 }
 
-const users: Record<string, { password: string, friends: Set<string> }> = {};
-const JWT_SECRET = "your_secret_key";
+export async function friendLists(request: HttpRequest, _context: InvocationContext): Promise<HttpResponseInit> {
+  try {
+    const pool = await getPool();
 
-function authenticate(request: HttpRequest): string | null {
-    const auth = request.headers.get("authorization");
-    if (!auth) return null;
-    try {
-        const token = auth.split(" ")[1];
-        const payload = jwt.verify(token, JWT_SECRET) as { username: string };
-        return payload.username;
-    } catch {
-        return null;
-    }
-}
-
-export async function friends(
-    request: HttpRequest,
-    _context: InvocationContext, 
-): Promise<HttpResponseInit> {
-    const username = authenticate(request);
-    if (!username) return { status: 401, body: "Unauthorized" };
-    const user = users[username];
-    if (!user) return { status: 404, body: "User not found" };
-
+    
     if (request.method === "GET") {
-        return { status: 200, body: JSON.stringify({ friends: Array.from(user.friends || []) }) };
+      const username = request.query.get("username");
+      if (!username) {
+        return { status: 400, body: "Username query parameter is required" };
+      }
+
+      const result = await pool
+        .request()
+        .input("username", sql.VarChar, username)
+        .query("SELECT friend, createdAt FROM [friendships] WHERE username = @username ORDER BY createdAt DESC");
+
+      return { status: 200, body: JSON.stringify(result.recordset) };
     }
+
+    
     if (request.method === "POST") {
-        const { friendUsername } = await request.json() as FriendRequestBody;
-        if (!users[friendUsername]) return { status: 404, body: "Friend not found" };
-        user.friends = user.friends || new Set();
-        user.friends.add(friendUsername);
-        return { status: 200, body: "Friend added" };
+      const { username, friend } = (await request.json()) as FriendRequestBody;
+
+      if (!username || !friend) {
+        return { status: 400, body: "Username and friend are required" };
+      }
+
+      if (username === friend) {
+        return { status: 400, body: "You cannot add yourself as a friend" };
+      }
+
+     
+      const check = await pool
+        .request()
+        .input("username", sql.VarChar, username)
+        .input("friend", sql.VarChar, friend)
+        .query("SELECT * FROM [friendships] WHERE username = @username AND friend = @friend");
+
+      if (check.recordset.length > 0) {
+        return { status: 409, body: "Already friends" };
+      }
+
+      await pool
+        .request()
+        .input("username", sql.VarChar, username)
+        .input("friend", sql.VarChar, friend)
+        .query("INSERT INTO [friendships] (username, friend) VALUES (@username, @friend)");
+
+      return { status: 201, body: "Friend added successfully" };
     }
+
+    
     if (request.method === "DELETE") {
-        const { friendUsername } = await request.json() as FriendRequestBody;
-        user.friends = user.friends || new Set();
-        user.friends.delete(friendUsername);
-        return { status: 200, body: "Friend removed" };
+      const { username, friend } = (await request.json()) as FriendRequestBody;
+
+      if (!username || !friend) {
+        return { status: 400, body: "Username and friend are required" };
+      }
+
+      const result = await pool
+        .request()
+        .input("username", sql.VarChar, username)
+        .input("friend", sql.VarChar, friend)
+        .query("DELETE FROM [friendships] WHERE username = @username AND friend = @friend");
+
+      if (result.rowsAffected[0] === 0) {
+        return { status: 404, body: "Friend not found" };
+      }
+
+      return { status: 200, body: "Friend removed successfully" };
     }
+
     return { status: 405, body: "Method not allowed" };
+  } catch (error) {
+    console.error("Friend List API error:", error);
+    return { status: 500, body: "Internal server error" };
+  }
 }
 
-app.http("friends", {
-    methods: ["GET", "POST", "DELETE"],
-    authLevel: "anonymous",
-    handler: friends,
+app.http("friendLists", {
+  methods: ["GET", "POST", "DELETE"],
+  authLevel: "anonymous",
+  handler: friendLists,
 });

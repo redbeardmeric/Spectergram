@@ -26,7 +26,7 @@ export async function register(request: HttpRequest, _context: InvocationContext
 
     const pool = await getPool();
 
-    // Check if user or gmail already exists
+    
     const existing = await pool
       .request()
       .input("username", sql.VarChar, username)
@@ -36,7 +36,7 @@ export async function register(request: HttpRequest, _context: InvocationContext
       return { status: 409, body: "Username already exists" };
     }
 
-    // Hash and insert
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool
       .request()
