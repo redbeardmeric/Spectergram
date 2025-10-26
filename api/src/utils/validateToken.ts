@@ -39,6 +39,22 @@ async function fetchJWKS(): Promise<JWK[]> {
 
 export async function verifyToken(token: string): Promise<any> {
 	if (!token) throw new Error("No token provided");
+
+	// Try custom JWT first (HS256 with secret)
+	const jwtSecret = process.env.JWT_SECRET;
+	if (jwtSecret) {
+		try {
+			const payload = jwt.verify(token, jwtSecret, {
+				algorithms: ["HS256"],
+			});
+			return payload;
+		} catch (err) {
+			// If custom JWT verification fails, try Entra ID
+			console.log("Custom JWT verification failed, trying Entra ID");
+		}
+	}
+
+	// Fall back to Entra ID token verification
 	if (!expectedAudience)
 		throw new Error(
 			"No expected audience configured (ENTRA_AUDIENCE or ENTRA_CLIENT_ID)",
