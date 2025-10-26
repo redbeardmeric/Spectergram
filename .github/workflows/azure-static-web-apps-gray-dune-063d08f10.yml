@@ -51,6 +51,8 @@ jobs:
           find api/node_modules -name "LICENSE*" -delete
           find api/node_modules -name "*.ts" -not -name "*.d.ts" -delete
           find api/node_modules -type d -name "test" -o -name "tests" -o -name "docs" | xargs rm -rf
+      - name: Remove package-lock.json to prevent Oryx from reinstalling
+        run: rm -f api/package-lock.json
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
