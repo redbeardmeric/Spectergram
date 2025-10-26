@@ -64,14 +64,16 @@ jobs:
           api_location: "api" # Api source code path - optional
           output_location: "dist" # Built app content directory - optional
           skip_app_build: true
-          skip_api_build: true
-          api_build_command: ""
+          skip_api_build: false
+          api_build_command: "echo 'Using pre-built API artifacts'"
           deployment_environment: "development"
           ###### End of Repository/Build Configurations ######
         env:
           NODE_VERSION: "22"
           FUNCTIONS_NODE_VERSION: "22"
           FUNCTIONS_WORKER_RUNTIME: "node"
+          PRE_BUILD_COMMAND: "echo 'Skipping npm install - using pre-installed dependencies'"
+          ORYX_DISABLE_NODEJS_BUILD: "true"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
