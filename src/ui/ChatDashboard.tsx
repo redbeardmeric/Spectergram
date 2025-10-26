@@ -38,7 +38,7 @@ export default function ChatDashboard() {
   const [input, setInput] = useState("");
   const [search, setSearch] = useState("");
 
-  // 🧠 States for Settings & Edit Profile
+  //  States for Settings & Edit Profile
   const [showSettings, setShowSettings] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
@@ -240,7 +240,7 @@ const handleReaction = (id: number, emoji: string) => {
         </section>
       </div>
 
-      {/*  Settings Drawer (unchanged) */}
+      {/*  Settings Drawer */}
       {showSettings && (
         <div className="settings-drawer fixed top-0 right-0 h-full w-80 glass p-6 z-50 border-l border-[#2a2a2a] fade-in">
           <div className="flex justify-between items-center mb-4">
@@ -303,7 +303,7 @@ const handleReaction = (id: number, emoji: string) => {
         </div>
       )}
 
-      {/*  Edit Profile Modal (unchanged) */}
+      {/*  Edit Profile Modal */}
       {showEditProfile && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50">
           <div className="glass p-6 rounded-xl w-80 border border-[#2a2a2a]">

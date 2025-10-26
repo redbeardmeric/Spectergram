@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 🌌 Spectergram Advanced Glow Theme */
+/* Spectergram Advanced Glow Theme */
 :root {
   --specter-bg: #050505;
   --specter-surface: #101010;
@@ -28,7 +28,7 @@
   --specter-border: #1f1f1f;
 }
 
-/* 🌤️ Frost Light Mode */
+/*  Frost Light Mode */
 body.light-mode {
   --specter-bg: #e8f0f8;
   --specter-card: #ffffff;
@@ -259,7 +259,7 @@ button:hover {
 }
 
 
-/* 🔮 Neon Header Glow */
+/*  Neon Header Glow */
 .glow {
   color: #61dafb;
   text-shadow: 0 0 10px #61dafb, 0 0 20px #61dafb, 0 0 40px rgba(97, 218, 251, 0.5);
@@ -338,7 +338,7 @@ button:hover {
   filter: blur(6px);
 }
 
-/* 🔮 Header Glow */
+/*  Header Glow */
 .glow {
   color: #61dafb;
   text-shadow: 0 0 10px #61dafb, 0 0 20px #61dafb, 0 0 40px rgba(97, 218, 251, 0.5);
@@ -354,7 +354,7 @@ button:hover {
   }
 }
 
-/* ✨ Smooth fade-in for messages and layout */
+/* Smooth fade-in for messages and layout */
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -370,13 +370,13 @@ button:hover {
   }
 }
 
-/* 💫 Hover pop for chat bubbles */
+/*  Hover pop for chat bubbles */
 .bg-gradient-to-br:hover {
   transform: scale(1.03);
   transition: transform 0.2s ease;
 }
 
-/* 🧭 Settings Drawer Animation */
+/*  Settings Drawer Animation */
 .settings-drawer {
   animation: slideIn 0.4s ease-out forwards;
 }
@@ -386,7 +386,7 @@ button:hover {
 }
 
 
-/* ✨ Reaction Hover Animation */
+/*  Reaction Hover Animation */
 .reaction-bar span {
   transition: transform 0.2s ease, text-shadow 0.2s ease;
 }
@@ -397,7 +397,7 @@ button:hover {
   transform: scale(1.3);
 }
 
-/* 🟢 Online Indicator Pulse (for online friends) */
+/*  Online Indicator Pulse (for online friends) */
 @keyframes onlinePulse {
   0%, 100% { box-shadow: 0 0 6px rgba(34, 197, 94, 0.8); }
   50% { box-shadow: 0 0 12px rgba(34, 197, 94, 1); }
@@ -407,7 +407,7 @@ button:hover {
   animation: onlinePulse 1.5s infinite;
 }
 
-/* 🌗 Theme Transition Smoothness */
+/*  Theme Transition Smoothness */
 body, .glass, input, button, .glow {
   transition: background 0.3s ease,
               color 0.3s ease,
@@ -415,7 +415,7 @@ body, .glass, input, button, .glow {
               border 0.3s ease;
 }
 
-/* 🧭 Settings Drawer Slide-in */
+/* Settings Drawer Slide-in */
 .settings-drawer {
   animation: slideIn 0.4s ease-out forwards;
 }
@@ -424,7 +424,7 @@ body, .glass, input, button, .glow {
   to   { transform: translateX(0); opacity: 1; }
 }
 
-/* 🩵 Reactions Display Row (under messages) */
+/*  Reactions Display Row (under messages) */
 .reactions-list span {
   display: inline-block;
   margin-right: 4px;
@@ -432,7 +432,7 @@ body, .glass, input, button, .glow {
   opacity: 0.9;
 }
 
-/* 💬 Message Bubble Smooth Fade */
+/* Message Bubble Smooth Fade */
 .fade-in {
   animation: fadeIn 0.4s ease-in-out;
 }
