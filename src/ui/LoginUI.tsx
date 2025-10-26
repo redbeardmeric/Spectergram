@@ -179,10 +179,14 @@ export default function LoginUI() {
 				</form>
 
 				<p className="text-center text-sm text-gray-400 mt-5">
-					Don’t have an account?{" "}
-					<a href="/signup" className="text-[#61dafb] hover:underline">
+					Don't have an account?{" "}
+					<button
+						type="button"
+						onClick={() => navigate({ to: "/signup" })}
+						className="text-[#61dafb] hover:underline bg-transparent border-none cursor-pointer"
+					>
 						Sign up
-					</a>
+					</button>
 				</p>
 			</div>
 		</div>

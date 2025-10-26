@@ -3,10 +3,21 @@ import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 import { resolve } from "node:path";
+import { copyFileSync } from "node:fs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [viteReact(), tailwindcss()],
+	plugins: [
+		viteReact(),
+		tailwindcss(),
+		{
+			name: "copy-static-config",
+			closeBundle() {
+				// Copy staticwebapp.config.json to dist folder after build
+				copyFileSync("staticwebapp.config.json", "dist/staticwebapp.config.json");
+			},
+		},
+	],
 	test: {
 		globals: true,
 		environment: "jsdom",
