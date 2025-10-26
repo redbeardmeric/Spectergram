@@ -5,26 +5,14 @@
 	--specter-bg: #050505;
 	--specter-surface: #101010;
 	--specter-panel: #181818;
-	--specter-border: #252525;
+	--specter-border: #1f1f1f;
 	--specter-accent: #61dafb;
 	--specter-accent2: #7ee7ff;
 	--specter-accent3: #3fa9f5;
 	--specter-radius: 0.9rem;
-	--specter-text: #f5f5f5;
+	--specter-text: #ffffff;
 	--specter-muted: #a1a1aa;
-	--specter-bg: #050505;
 	--specter-card: #0a0a0a;
-	--specter-text: #ffffff;
-	--specter-accent: #61dafb;
-	--specter-border: #1f1f1f;
-}
-
-:root {
-	--specter-bg: #050505;
-	--specter-card: #0a0a0a;
-	--specter-text: #ffffff;
-	--specter-accent: #61dafb;
-	--specter-border: #1f1f1f;
 }
 
 /* 🌤️ Frost Light Mode */
@@ -42,17 +30,51 @@ body.light-mode {
 		color 0.4s ease;
 }
 
-/* Glass and Glow adjustments */
+/* Base glass effect */
+.glass {
+	backdrop-filter: blur(18px);
+	background: rgba(20, 20, 20, 0.55);
+	border: 1px solid rgba(97, 218, 251, 0.08);
+	border-radius: var(--specter-radius);
+	box-shadow: 0 0 30px rgba(97, 218, 251, 0.15);
+	transition: 0.4s all;
+}
+.glass:hover {
+	box-shadow: 0 0 35px rgba(97, 218, 251, 0.25);
+}
+
+/* Light mode overrides for glass */
 body.light-mode .glass {
 	background: rgba(255, 255, 255, 0.8);
 	box-shadow: 0 0 25px rgba(0, 119, 255, 0.2);
 }
 
+/* Base glow styles + light-mode override (single definitions) */
+.glow {
+	color: var(--specter-accent);
+	text-shadow:
+		0 0 10px rgba(97, 218, 251, 0.9),
+		0 0 20px rgba(97, 218, 251, 0.6),
+		0 0 40px rgba(97, 218, 251, 0.35);
+	animation: glowPulse 3s infinite ease-in-out alternate;
+}
+
 body.light-mode .glow {
+	/* subtle tweak for light mode */
 	color: var(--specter-accent);
 	text-shadow: 0 0 8px rgba(0, 119, 255, 0.5);
 }
 
+@keyframes glowPulse {
+	0% {
+		text-shadow: 0 0 12px rgba(97, 218, 251, 0.4);
+	}
+	100% {
+		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
+	}
+}
+
+/* Core transitions */
 body,
 .glass,
 input,
@@ -79,6 +101,7 @@ body {
 		background-position: 100% 100%;
 	}
 }
+
 body::after {
 	content: "";
 	position: fixed;
@@ -101,30 +124,7 @@ body::after {
 	}
 }
 
-/* Universal glass effect */
-.glass {
-	backdrop-filter: blur(18px);
-	background: rgba(20, 20, 20, 0.55);
-	border: 1px solid rgba(97, 218, 251, 0.08);
-	border-radius: var(--specter-radius);
-	box-shadow: 0 0 30px rgba(97, 218, 251, 0.15);
-	transition: 0.4s all;
-}
-.glass:hover {
-	box-shadow: 0 0 35px rgba(97, 218, 251, 0.25);
-}
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Password strength glowing animation */
+/* Shimmer for strength bar */
 .strength-bar {
 	position: relative;
 	overflow: hidden;
@@ -154,55 +154,7 @@ body::after {
 	}
 }
 
-/* Animated shimmer bar */
-.strength-bar {
-	position: relative;
-	overflow: hidden;
-	border-radius: 9999px;
-}
-.strength-bar::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		90deg,
-		rgba(255, 255, 255, 0.4),
-		transparent,
-		rgba(255, 255, 255, 0.4)
-	);
-	background-size: 200% 100%;
-	animation: shimmer 2.5s infinite linear;
-	mix-blend-mode: overlay;
-	opacity: 0.4;
-}
-@keyframes shimmer {
-	0% {
-		background-position: -200% 0;
-	}
-	100% {
-		background-position: 200% 0;
-	}
-}
-
-/* 🔮 Neon Header Glow */
-.glow {
-	color: #61dafb;
-	text-shadow:
-		0 0 10px #61dafb,
-		0 0 20px #61dafb,
-		0 0 40px rgba(97, 218, 251, 0.5);
-	animation: glowPulse 3s infinite ease-in-out alternate;
-}
-@keyframes glowPulse {
-	0% {
-		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-	}
-	100% {
-		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-	}
-}
-
-/* ✨ Smooth fade-in for bubbles and components */
+/* Fade-in utility (single definition) */
 .fade-in {
 	animation: fadeIn 0.5s ease-in-out;
 }
@@ -217,39 +169,7 @@ body::after {
 	}
 }
 
-/* 💫 Message bubble hover pop */
-.bg-gradient-to-br:hover {
-	transform: scale(1.03);
-	transition: transform 0.2s ease;
-}
-
-/* Neon glow text */
-.glow {
-	color: var(--specter-accent);
-	text-shadow:
-		0 0 15px rgba(97, 218, 251, 0.6),
-		0 0 30px rgba(97, 218, 251, 0.3);
-	animation: flicker 3s infinite alternate ease-in-out;
-}
-@keyframes flicker {
-	0%,
-	19%,
-	21%,
-	23%,
-	25%,
-	54%,
-	56%,
-	100% {
-		opacity: 1;
-	}
-	20%,
-	24%,
-	55% {
-		opacity: 0.4;
-	}
-}
-
-/* Inputs with floating glow */
+/* Buttons & inputs */
 input {
 	background: rgba(25, 25, 25, 0.9);
 	border: 1px solid var(--specter-border);
@@ -264,7 +184,6 @@ input:focus {
 	outline: none;
 }
 
-/* Buttons with neon edge */
 button {
 	background: linear-gradient(
 		90deg,
@@ -303,7 +222,7 @@ button:hover {
 	box-shadow: 0 0 25px rgba(97, 218, 251, 0.5);
 }
 
-/* Chat bubbles with glow */
+/* Chat bubbles */
 .bubble-me {
 	background: linear-gradient(
 		135deg,
@@ -322,7 +241,7 @@ button:hover {
 	padding: 0.7rem 1rem;
 }
 
-/* Chat layout refinement */
+/* Sidebar and input tweaks */
 .chat-sidebar {
 	border-right: 1px solid var(--specter-border);
 	background: rgba(15, 15, 15, 0.85);
@@ -337,121 +256,7 @@ button:hover {
 	box-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
 }
 
-/* Smooth entrance */
-.fade-in {
-	animation: fadeIn 0.6s ease-in-out forwards;
-}
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Password strength glowing animation */
-.strength-bar {
-	position: relative;
-	overflow: hidden;
-	border-radius: 9999px;
-}
-.strength-bar::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		90deg,
-		rgba(255, 255, 255, 0.4),
-		transparent,
-		rgba(255, 255, 255, 0.4)
-	);
-	background-size: 200% 100%;
-	animation: shimmer 2.5s infinite linear;
-	mix-blend-mode: overlay;
-	opacity: 0.4;
-}
-@keyframes shimmer {
-	0% {
-		background-position: -200% 0;
-	}
-	100% {
-		background-position: 200% 0;
-	}
-}
-
-/* Animated shimmer bar */
-.strength-bar {
-	position: relative;
-	overflow: hidden;
-	border-radius: 9999px;
-}
-.strength-bar::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		90deg,
-		rgba(255, 255, 255, 0.4),
-		transparent,
-		rgba(255, 255, 255, 0.4)
-	);
-	background-size: 200% 100%;
-	animation: shimmer 2.5s infinite linear;
-	mix-blend-mode: overlay;
-	opacity: 0.4;
-}
-@keyframes shimmer {
-	0% {
-		background-position: -200% 0;
-	}
-	100% {
-		background-position: 200% 0;
-	}
-}
-
-/* 🔮 Neon Header Glow */
-.glow {
-	color: #61dafb;
-	text-shadow:
-		0 0 10px #61dafb,
-		0 0 20px #61dafb,
-		0 0 40px rgba(97, 218, 251, 0.5);
-	animation: glowPulse 3s infinite ease-in-out alternate;
-}
-@keyframes glowPulse {
-	0% {
-		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-	}
-	100% {
-		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-	}
-}
-
-/* ✨ Smooth fade-in for bubbles and components */
-.fade-in {
-	animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(6px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* 💫 Message bubble hover pop */
-.bg-gradient-to-br:hover {
-	transform: scale(1.03);
-	transition: transform 0.2s ease;
-}
-
-/* 🌌 Spectergram Animated Orb Logo */
+/* Orb logo */
 .specter-orb {
 	width: 20px;
 	height: 20px;
@@ -465,7 +270,6 @@ button:hover {
 		pulseGlow 2.5s ease-in-out infinite alternate;
 	position: relative;
 }
-
 @keyframes orbitSpin {
 	0% {
 		transform: rotate(0deg);
@@ -474,7 +278,6 @@ button:hover {
 		transform: rotate(360deg);
 	}
 }
-
 @keyframes pulseGlow {
 	0% {
 		box-shadow:
@@ -490,61 +293,7 @@ button:hover {
 	}
 }
 
-.specter-orb::after {
-	content: "";
-	position: absolute;
-	inset: -5px;
-	border-radius: 50%;
-	background: radial-gradient(
-		circle,
-		rgba(97, 218, 251, 0.15),
-		transparent 70%
-	);
-	filter: blur(6px);
-}
-
-/* 🔮 Header Glow */
-.glow {
-	color: #61dafb;
-	text-shadow:
-		0 0 10px #61dafb,
-		0 0 20px #61dafb,
-		0 0 40px rgba(97, 218, 251, 0.5);
-	animation: glowPulse 3s infinite ease-in-out alternate;
-}
-
-@keyframes glowPulse {
-	0% {
-		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-	}
-	100% {
-		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-	}
-}
-
-/* ✨ Smooth fade-in for messages and layout */
-.fade-in {
-	animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(6px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* 💫 Hover pop for chat bubbles */
-.bg-gradient-to-br:hover {
-	transform: scale(1.03);
-	transition: transform 0.2s ease;
-}
-
-/* 🧭 Settings Drawer Animation */
+/* Settings drawer animation */
 .settings-drawer {
 	animation: slideIn 0.4s ease-out forwards;
 }
@@ -559,95 +308,10 @@ button:hover {
 	}
 }
 
-@keyframes orbitSpin {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-@keyframes pulseGlow {
-	0% {
-		box-shadow:
-			0 0 10px rgba(97, 218, 251, 0.3),
-			0 0 25px rgba(97, 218, 251, 0.1);
-		transform: scale(0.95);
-	}
-	100% {
-		box-shadow:
-			0 0 25px rgba(97, 218, 251, 0.6),
-			0 0 45px rgba(97, 218, 251, 0.3);
-		transform: scale(1.05);
-	}
-}
-
-.specter-orb::after {
-	content: "";
-	position: absolute;
-	inset: -5px;
-	border-radius: 50%;
-	background: radial-gradient(
-		circle,
-		rgba(97, 218, 251, 0.15),
-		transparent 70%
-	);
-	filter: blur(6px);
-}
-
-/* 🔮 Header Glow */
-.glow {
-	color: #61dafb;
-	text-shadow:
-		0 0 10px #61dafb,
-		0 0 20px #61dafb,
-		0 0 40px rgba(97, 218, 251, 0.5);
-	animation: glowPulse 3s infinite ease-in-out alternate;
-}
-
-@keyframes glowPulse {
-	0% {
-		text-shadow: 0 0 15px rgba(97, 218, 251, 0.4);
-	}
-	100% {
-		text-shadow: 0 0 25px rgba(97, 218, 251, 0.8);
-	}
-}
-
-/* ✨ Smooth fade-in for messages and layout */
-.fade-in {
-	animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(6px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* 💫 Hover pop for chat bubbles */
+/* Minor helpers */
 .bg-gradient-to-br:hover {
 	transform: scale(1.03);
 	transition: transform 0.2s ease;
 }
 
-/* 🧭 Settings Drawer Animation */
-.settings-drawer {
-	animation: slideIn 0.4s ease-out forwards;
-}
-@keyframes slideIn {
-	from {
-		transform: translateX(100%);
-		opacity: 0;
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-	}
-}
+/* End of consolidated stylesheet */

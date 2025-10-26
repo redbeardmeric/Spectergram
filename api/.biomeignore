@@ -1,0 +1,6 @@
+# Ignore compiled JS and node modules inside the API folder
+dist/
+node_modules/
+
+# Local settings
+local.settings.json

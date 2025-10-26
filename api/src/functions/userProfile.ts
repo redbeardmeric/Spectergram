@@ -4,7 +4,7 @@ import {
 	type HttpResponseInit,
 	type InvocationContext,
 } from "@azure/functions";
-import jwt from "jsonwebtoken";
+import { extractBearer, verifyToken } from "../utils/validateToken";
 
 interface UserProfile {
 	bio?: string;
@@ -17,16 +17,20 @@ interface ProfileRequestBody {
 }
 
 const users: Record<string, { password: string; profile: UserProfile }> = {};
-const JWT_SECRET = "samyog";
 
-function authenticate(request: HttpRequest): string | null {
+async function authenticate(request: HttpRequest): Promise<string | null> {
 	const auth = request.headers.get("authorization");
-	if (!auth) return null;
+	const token = extractBearer(auth);
+	if (!token) return null;
 	try {
-		const token = auth.split(" ")[1];
-		const payload = jwt.verify(token, JWT_SECRET) as { username: string };
-		return payload.username;
-	} catch {
+		const payload: any = await verifyToken(token);
+		// Prefer 'preferred_username' or 'email' or 'sub' claim
+		return (payload.preferred_username ||
+			payload.email ||
+			payload.sub ||
+			null) as string | null;
+	} catch (err) {
+		// verification failed
 		return null;
 	}
 }
@@ -35,7 +39,7 @@ export async function profile(
 	request: HttpRequest,
 	_context: InvocationContext,
 ): Promise<HttpResponseInit> {
-	const username = authenticate(request);
+	const username = await authenticate(request);
 	if (!username) return { status: 401, body: "Unauthorized" };
 	const user = users[username];
 	if (!user) return { status: 404, body: "User not found" };

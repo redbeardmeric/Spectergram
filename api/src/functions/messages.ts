@@ -4,7 +4,7 @@ import {
 	type HttpResponseInit,
 	type InvocationContext,
 } from "@azure/functions";
-import jwt from "jsonwebtoken";
+import { extractBearer, verifyToken } from "../utils/validateToken";
 
 interface MessageRequestBody {
 	to: string;
@@ -18,15 +18,17 @@ interface UserStore {
 }
 
 const users: Record<string, UserStore> = {};
-const JWT_SECRET = "your_secret_key";
 
-function authenticate(request: HttpRequest): string | null {
+async function authenticate(request: HttpRequest): Promise<string | null> {
 	const auth = request.headers.get("authorization");
-	if (!auth) return null;
+	const token = extractBearer(auth);
+	if (!token) return null;
 	try {
-		const token = auth.split(" ")[1];
-		const payload = jwt.verify(token, JWT_SECRET) as { username: string };
-		return payload.username;
+		const payload: any = await verifyToken(token);
+		return (payload.preferred_username ||
+			payload.email ||
+			payload.sub ||
+			null) as string | null;
 	} catch {
 		return null;
 	}
@@ -36,7 +38,7 @@ export async function messages(
 	request: HttpRequest,
 	_context: InvocationContext,
 ): Promise<HttpResponseInit> {
-	const username = authenticate(request);
+	const username = await authenticate(request);
 	if (!username) return { status: 401, body: "Unauthorized" };
 	const user = users[username];
 	if (!user) return { status: 404, body: "User not found" };

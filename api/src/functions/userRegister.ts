@@ -6,7 +6,7 @@ import {
 } from "@azure/functions";
 import bcrypt from "bcryptjs";
 import * as sql from "mssql";
-import { getPool } from "./db";
+import { getPool } from "../db";
 
 interface RegisterRequestBody {
 	username: string;
