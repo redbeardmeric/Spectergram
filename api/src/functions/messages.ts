@@ -25,7 +25,9 @@ async function authenticate(request: HttpRequest): Promise<string | null> {
 	if (!token) return null;
 	try {
 		const payload: any = await verifyToken(token);
-		return (payload.preferred_username ||
+		// Support both custom JWT (username) and Entra ID tokens
+		return (payload.username ||
+			payload.preferred_username ||
 			payload.email ||
 			payload.sub ||
 			null) as string | null;

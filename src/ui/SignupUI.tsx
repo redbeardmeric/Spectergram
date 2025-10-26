@@ -1,7 +1,9 @@
 import { useMsal } from "@azure/msal-react";
+import { useNavigate } from "@tanstack/react-router";
 import type React from "react";
 import { useState } from "react";
 import { loginRequest } from "../auth/msalConfig";
+import { register } from "../lib/api";
 
 export default function SignupUI() {
 	const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -10,7 +12,11 @@ export default function SignupUI() {
 		color: "",
 		gradient: "",
 	});
+	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 
+	const navigate = useNavigate();
 	const { instance } = useMsal();
 	const hasMsalClient = Boolean(import.meta.env.VITE_MSAL_CLIENT_ID);
 
@@ -50,9 +56,25 @@ export default function SignupUI() {
 		if (name === "password") setStrength(evaluatePassword(value));
 	};
 
-	const handleSignup = (e: React.FormEvent) => {
+	const handleSignup = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Signing up with:", form);
+		setError("");
+		setLoading(true);
+		setSuccess(false);
+
+		try {
+			// Register uses username, gmail, password
+			await register(form.name, form.email, form.password);
+			setSuccess(true);
+			// Redirect to login after 2 seconds
+			setTimeout(() => {
+				navigate({ to: "/login" });
+			}, 2000);
+		} catch (err: any) {
+			setError(err.message || "Registration failed");
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -61,6 +83,18 @@ export default function SignupUI() {
 				<h1 className="text-3xl font-bold mb-6 text-center glow">
 					Create Account
 				</h1>
+
+				{error && (
+					<div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-2 rounded-lg mb-4">
+						{error}
+					</div>
+				)}
+
+				{success && (
+					<div className="bg-green-500/20 border border-green-500 text-green-200 px-4 py-2 rounded-lg mb-4">
+						Account created! Redirecting to login...
+					</div>
+				)}
 
 				<form onSubmit={handleSignup} className="flex flex-col gap-5">
 					<input
@@ -123,8 +157,8 @@ export default function SignupUI() {
 						)}
 					</div>
 
-					<button type="submit" className="mt-3">
-						Sign Up
+					<button type="submit" className="mt-3" disabled={loading || success}>
+						{loading ? "Creating account..." : "Sign Up"}
 					</button>
 
 					{hasMsalClient && (

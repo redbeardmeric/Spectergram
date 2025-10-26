@@ -5,6 +5,7 @@ import {
 	type InvocationContext,
 } from "@azure/functions";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import * as sql from "mssql";
 import { getPool } from "../db";
 
@@ -41,9 +42,29 @@ export async function login(
 			return { status: 401, body: "Invalid Gmail or password" };
 		}
 
+		// Generate JWT token
+		const jwtSecret = process.env.JWT_SECRET || "your-secret-key-change-this";
+		const token = jwt.sign(
+			{
+				userId: user.id,
+				username: user.username,
+				email: user.gmail,
+			},
+			jwtSecret,
+			{ expiresIn: "7d" }, // Token expires in 7 days
+		);
+
 		return {
 			status: 200,
-			body: `Welcome, ${user.username}! Login successful.`,
+			jsonBody: {
+				message: `Welcome, ${user.username}! Login successful.`,
+				token,
+				user: {
+					id: user.id,
+					username: user.username,
+					email: user.gmail,
+				},
+			},
 		};
 	} catch (error) {
 		console.error("Login error:", error);
