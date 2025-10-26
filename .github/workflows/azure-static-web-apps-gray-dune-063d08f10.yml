@@ -30,8 +30,16 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install frontend dependencies
         run: npm ci
+      - name: Clean dist folder
+        run: rm -rf dist
       - name: Build frontend
         run: npm run build
+      - name: Verify build output
+        run: |
+          echo "Checking dist folder contents:"
+          ls -la dist/
+          echo "Checking index.html:"
+          cat dist/index.html | grep -E "(title|description)"
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -52,8 +60,9 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "dist" # Pre-built app output directory
           api_location: "" # API deployed separately to Azure Functions
-          output_location: "" # No build step, files are already in app_location
+          output_location: "." # Files are in app_location
           skip_app_build: true
+          skip_api_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
           deployment_environment: "production"
           ###### End of Repository/Build Configurations ######
