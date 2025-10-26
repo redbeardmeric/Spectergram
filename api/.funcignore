@@ -7,6 +7,30 @@ __blobstorage__
 __queuestorage__
 local.settings.json
 test
+tests
 tsconfig.json
-node_modules/azure-functions-core-tools
-azure-functions-core-tools
+
+# Build tools and dev dependencies
+node_modules/azure-functions-core-tools/
+node_modules/@types/
+node_modules/typescript/
+node_modules/rimraf/
+node_modules/.bin/
+
+# Exclude source files (only deploy dist)
+src/
+
+# Exclude package files
+package-lock.json
+.npmrc
+.npmignore
+
+# Exclude build artifacts from Oryx
+.oryx_*
+.oryx_prod_node_modules/
+.oryx_all_node_modules/
+
+# Exclude documentation and metadata
+*.md
+LICENSE
+CHANGELOG*
