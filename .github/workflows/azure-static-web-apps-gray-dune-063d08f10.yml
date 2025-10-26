@@ -22,6 +22,16 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+      - name: Install frontend dependencies
+        run: npm ci
+      - name: Build frontend
+        run: npm run build
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -40,10 +50,12 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "api" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
+          app_location: "/dist" # Pre-built app directory
+          api_location: "" # API deployed separately to Azure Functions
+          output_location: "" # Already built, no further output
+          skip_app_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
+          deployment_environment: "production"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

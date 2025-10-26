@@ -1,7 +1,9 @@
 import { useMsal } from "@azure/msal-react";
+import { useNavigate } from "@tanstack/react-router";
 import type React from "react";
 import { useState } from "react";
 import { loginRequest } from "../auth/msalConfig";
+import { login } from "../lib/api";
 
 export default function LoginUI() {
 	const [email, setEmail] = useState("");
@@ -12,6 +14,10 @@ export default function LoginUI() {
 		gradient: "",
 	});
 	const [showPassword, setShowPassword] = useState(false);
+	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	// MSAL instance for Entra sign-in
 	const { instance } = useMsal();
@@ -56,9 +62,20 @@ export default function LoginUI() {
 		}
 	};
 
-	const handleLogin = (e: React.FormEvent) => {
+	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Logging in with:", { email, password });
+		setError("");
+		setLoading(true);
+
+		try {
+			await login(email, password);
+			// Navigate to chat dashboard on success
+			navigate({ to: "/chat" });
+		} catch (err: any) {
+			setError(err.message || "Login failed");
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -67,6 +84,12 @@ export default function LoginUI() {
 				<h1 className="text-3xl font-bold mb-6 text-center glow">
 					Spectergram
 				</h1>
+
+				{error && (
+					<div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-2 rounded-lg mb-4">
+						{error}
+					</div>
+				)}
 
 				<form onSubmit={handleLogin} className="flex flex-col gap-5">
 					<input
@@ -131,8 +154,8 @@ export default function LoginUI() {
 						)}
 					</div>
 
-					<button type="submit" className="mt-3">
-						Log In
+					<button type="submit" className="mt-3" disabled={loading}>
+						{loading ? "Logging in..." : "Log In"}
 					</button>
 
 					{/* Entra / Microsoft sign-in (MSAL) */}
