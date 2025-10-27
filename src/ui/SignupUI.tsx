@@ -183,9 +183,13 @@ export default function SignupUI() {
 
 				<p className="text-center text-sm text-gray-400 mt-5">
 					Already have an account?{" "}
-					<a href="/login" className="text-[#61dafb] hover:underline">
+					<button
+						type="button"
+						onClick={() => navigate({ to: "/login" })}
+						className="text-[#61dafb] hover:underline bg-transparent border-none cursor-pointer"
+					>
 						Log in
-					</a>
+					</button>
 				</p>
 			</div>
 		</div>
