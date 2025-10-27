@@ -1,82 +1,69 @@
-import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
-import { getPool } from "../db";
-import * as sql from "mssql";
+import {
+	app,
+	type HttpRequest,
+	type HttpResponseInit,
+	type InvocationContext,
+} from "@azure/functions";
+import { extractBearer, verifyToken } from "../utils/validateToken";
 
-interface ProfileRequestBody {
-  bio?: string;
-  displayName?: string;
+interface UserProfile {
+	bio?: string;
+	displayName?: string;
 }
 
-export async function profile(request: HttpRequest, _context: InvocationContext): Promise<HttpResponseInit> {
-  try {
-    const pool = await getPool();
+interface ProfileRequestBody {
+	bio?: string;
+	displayName?: string;
+}
 
-    
-    if (request.method === "GET") {
-      const username = request.query.get("username");
-      if (!username) {
-        return { status: 400, body: "Username query parameter is required" };
-      }
+const users: Record<string, { password: string; profile: UserProfile }> = {};
 
-      const result = await pool
-        .request()
-        .input("username", sql.VarChar, username)
-        .query("SELECT username, displayName, bio FROM [profiles] WHERE username = @username");
+async function authenticate(request: HttpRequest): Promise<string | null> {
+	const auth = request.headers.get("authorization");
+	const token = extractBearer(auth);
+	if (!token) return null;
+	try {
+		const payload: any = await verifyToken(token);
+		// Prefer 'preferred_username' or 'email' or 'sub' claim
+		return (payload.preferred_username ||
+			payload.email ||
+			payload.sub ||
+			null) as string | null;
+	} catch (err) {
+		// verification failed
+		return null;
+	}
+}
 
-      if (result.recordset.length === 0) {
-        return { status: 404, body: "Profile not found" };
-      }
+export async function profile(
+	request: HttpRequest,
+	_context: InvocationContext,
+): Promise<HttpResponseInit> {
+	const username = await authenticate(request);
+	if (!username) return { status: 401, body: "Unauthorized" };
+	const user = users[username];
+	if (!user) return { status: 404, body: "User not found" };
 
-      return { status: 200, body: JSON.stringify(result.recordset[0]) };
-    }
+	if (request.method === "GET") {
+		return {
+			status: 200,
+			body: JSON.stringify({ profile: user.profile || {} }),
+		};
+	}
 
-   
-    if (request.method === "PUT") {
-      const { bio, displayName } = (await request.json()) as ProfileRequestBody;
-      const username = request.query.get("username");
+	if (request.method === "PUT") {
+		const { bio, displayName } = (await request.json()) as ProfileRequestBody;
+		user.profile = user.profile || {};
+		if (bio !== undefined) user.profile.bio = bio;
+		if (displayName !== undefined) user.profile.displayName = displayName;
+		return { status: 200, body: JSON.stringify({ profile: user.profile }) };
+	}
 
-      if (!username) {
-        return { status: 400, body: "Username query parameter is required" };
-      }
-
-     
-      const existing = await pool
-        .request()
-        .input("username", sql.VarChar, username)
-        .query("SELECT * FROM [profiles] WHERE username = @username");
-
-      if (existing.recordset.length > 0) {
-        
-        await pool
-          .request()
-          .input("username", sql.VarChar, username)
-          .input("displayName", sql.VarChar, displayName || null)
-          .input("bio", sql.VarChar, bio || null)
-          .query("UPDATE [profiles] SET displayName = @displayName, bio = @bio WHERE username = @username");
-
-        return { status: 200, body: "Profile updated successfully" };
-      } else {
-        
-        await pool
-          .request()
-          .input("username", sql.VarChar, username)
-          .input("displayName", sql.VarChar, displayName || null)
-          .input("bio", sql.VarChar, bio || null)
-          .query("INSERT INTO [profiles] (username, displayName, bio) VALUES (@username, @displayName, @bio)");
-
-        return { status: 201, body: "Profile created successfully" };
-      }
-    }
-
-    return { status: 405, body: "Method not allowed" };
-  } catch (error) {
-    console.error("Profile API error:", error);
-    return { status: 500, body: "Internal server error" };
-  }
+	return { status: 405, body: "Method not allowed" };
 }
 
 app.http("profile", {
-  methods: ["GET", "PUT"],
-  authLevel: "anonymous",
-  handler: profile,
+	methods: ["GET", "PUT"],
+	authLevel: "anonymous",
+	handler: profile,
 });

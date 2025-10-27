@@ -1,67 +1,76 @@
-import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from "@azure/functions";
-import { getPool } from "../db";
-import * as sql from "mssql";
+import {
+	app,
+	type HttpRequest,
+	type HttpResponseInit,
+	type InvocationContext,
+} from "@azure/functions";
+import { extractBearer, verifyToken } from "../utils/validateToken";
 
 interface MessageRequestBody {
-  sender: string;
-  receiver: string;
-  message: string;
+	to: string;
+	message: string;
 }
 
-export async function messages(request: HttpRequest, _context: InvocationContext): Promise<HttpResponseInit> {
-  try {
-    const pool = await getPool();
+interface UserStore {
+	password: string;
+	friends: Set<string>;
+	messages: { from: string; message: string; timestamp: string }[];
+}
 
-   
-    if (request.method === "GET") {
-      const username = request.query.get("username");
-      if (!username) {
-        return { status: 400, body: "Username query parameter is required" };
-      }
+const users: Record<string, UserStore> = {};
 
-      const result = await pool
-        .request()
-        .input("username", sql.VarChar, username)
-        .query(`
-          SELECT sender, receiver, message, timestamp 
-          FROM [messages]
-          WHERE receiver = @username OR sender = @username
-          ORDER BY timestamp DESC
-        `);
+async function authenticate(request: HttpRequest): Promise<string | null> {
+	const auth = request.headers.get("authorization");
+	const token = extractBearer(auth);
+	if (!token) return null;
+	try {
+		const payload: any = await verifyToken(token);
+		// Support both custom JWT (username) and Entra ID tokens
+		return (payload.username ||
+			payload.preferred_username ||
+			payload.email ||
+			payload.sub ||
+			null) as string | null;
+	} catch {
+		return null;
+	}
+}
 
-      return { status: 200, body: JSON.stringify(result.recordset) };
-    }
+export async function messages(
+	request: HttpRequest,
+	_context: InvocationContext,
+): Promise<HttpResponseInit> {
+	const username = await authenticate(request);
+	if (!username) return { status: 401, body: "Unauthorized" };
+	const user = users[username];
+	if (!user) return { status: 404, body: "User not found" };
 
-    
-    if (request.method === "POST") {
-      const { sender, receiver, message } = (await request.json()) as MessageRequestBody;
+	if (request.method === "GET") {
+		return {
+			status: 200,
+			body: JSON.stringify({ messages: user.messages || [] }),
+		};
+	}
 
-      if (!sender || !receiver || !message) {
-        return { status: 400, body: "Sender, receiver, and message are required" };
-      }
+	if (request.method === "POST") {
+		const { to, message } = (await request.json()) as MessageRequestBody;
+		if (!users[to]) return { status: 404, body: "Recipient not found" };
+		if (!user.friends || !user.friends.has(to))
+			return { status: 400, body: "Recipient is not your friend" };
+		users[to].messages = users[to].messages || [];
+		users[to].messages.push({
+			from: username,
+			message,
+			timestamp: new Date().toISOString(),
+		});
+		return { status: 200, body: "Message sent" };
+	}
 
-      await pool
-        .request()
-        .input("sender", sql.VarChar, sender)
-        .input("receiver", sql.VarChar, receiver)
-        .input("message", sql.VarChar, message)
-        .query(`
-          INSERT INTO [messages] (sender, receiver, message)
-          VALUES (@sender, @receiver, @message)
-        `);
-
-      return { status: 201, body: "Message sent successfully" };
-    }
-
-    return { status: 405, body: "Method not allowed" };
-  } catch (error) {
-    console.error("Message API error:", error);
-    return { status: 500, body: "Internal server error" };
-  }
+	return { status: 405, body: "Method not allowed" };
 }
 
 app.http("messages", {
-  methods: ["GET", "POST"],
-  authLevel: "anonymous",
-  handler: messages,
+	methods: ["GET", "POST"],
+	authLevel: "anonymous",
+	handler: messages,
 });

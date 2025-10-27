@@ -27,19 +27,11 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            api/package-lock.json
+          cache-dependency-path: package-lock.json
       - name: Install frontend dependencies
         run: npm ci
       - name: Build frontend
         run: npm run build
-      - name: Install API dependencies
-        run: npm ci
-        working-directory: api
-      - name: Build API
-        run: npm run build
-        working-directory: api
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -54,14 +46,16 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_WATER_0DAB73910 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_DUNE_063D08F10 }}
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "api" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
+          app_location: "/dist" # Pre-built app directory
+          api_location: "" # API deployed separately to Azure Functions
+          output_location: "" # Already built, no further output
+          skip_app_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
+          deployment_environment: "production"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
@@ -73,6 +67,6 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          action: "close"
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_DUNE_063D08F10 }}
           app_location: "/" # App source code path
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_WATER_0DAB73910 }}
+          action: "close"
