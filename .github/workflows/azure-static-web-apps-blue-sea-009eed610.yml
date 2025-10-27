@@ -38,6 +38,7 @@ jobs:
           VITE_MSAL_CLIENT_ID: ${{ secrets.VITE_MSAL_CLIENT_ID }}
           VITE_MSAL_TENANT_ID: ${{ secrets.VITE_MSAL_TENANT_ID }}
           VITE_API_SCOPE: ${{ secrets.VITE_API_SCOPE }}
+          VITE_API_URL: https://spectergram-api-dev.azurewebsites.net
       - name: Verify build output
         run: |
           echo "Checking dist folder contents:"

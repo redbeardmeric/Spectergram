@@ -32,7 +32,12 @@ export const apiConfig = getApiConfig();
 
 // Helper to construct full API URL
 export function getApiUrl(path: string): string {
-	// Remove leading slash if present
-	const cleanPath = path.startsWith("/api/") ? path.substring(4) : path;
-	return `${apiConfig.baseUrl}${cleanPath.startsWith("/") ? "" : "/"}${cleanPath}`;
+	// Ensure path starts with /api
+	let cleanPath = path;
+	if (!cleanPath.startsWith("/api")) {
+		cleanPath = cleanPath.startsWith("/")
+			? `/api${cleanPath}`
+			: `/api/${cleanPath}`;
+	}
+	return `${apiConfig.baseUrl}${cleanPath}`;
 }
