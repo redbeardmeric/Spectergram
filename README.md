@@ -156,7 +156,6 @@ npm run format
 npm run check
 ```
 
-
 ## T3Env
 
 - You can use T3Env to add type safety to your environment variables.
@@ -170,7 +169,6 @@ import { env } from "@/env";
 
 console.log(env.VITE_APP_TITLE);
 ```
-
 
 
 ## Routing
