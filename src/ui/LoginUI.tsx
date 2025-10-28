@@ -122,7 +122,7 @@ export default function LoginUI() {
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 -translate-y-[1%] text-base text-gray-400 hover:text-white"
+								className="absolute right-3 top-1/2 translate-x-[20%] -translate-y-[4%] text-base text-gray-400 hover:text-whit"
 							>
 								{showPassword ? "🙈" : "👁"}
 							</button>
