@@ -682,3 +682,41 @@ button,
 a:hover .btn-sweep {
 	left: 125%;
 }
+
+@keyframes softGlow {
+	0%,
+	100% {
+		box-shadow:
+			0 0 20px rgba(97, 218, 251, 0.2),
+			0 0 40px rgba(97, 218, 251, 0.15);
+		opacity: 0.95;
+	}
+	50% {
+		box-shadow:
+			0 0 35px rgba(97, 218, 251, 0.35),
+			0 0 60px rgba(97, 218, 251, 0.25);
+		opacity: 1;
+	}
+}
+
+@keyframes floatUpDown {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+
+.empty-state {
+	animation:
+		softGlow 4s ease-in-out infinite,
+		floatUpDown 6s ease-in-out infinite;
+	border-radius: 1rem;
+	background: rgba(30, 30, 30, 0.6);
+	border: 1px solid rgba(97, 218, 251, 0.2);
+	padding: 2rem;
+	text-align: center;
+	backdrop-filter: blur(8px);
+}
