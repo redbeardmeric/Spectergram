@@ -7,53 +7,66 @@ import {
 import * as sql from "mssql";
 import { getPool } from "../db";
 
-interface SearchRequestBody {
-	query: string; // Can be username or gmail
-}
-
 export async function userSearch(
 	request: HttpRequest,
-	_context: InvocationContext,
+	context: InvocationContext,
 ): Promise<HttpResponseInit> {
 	try {
-		// Read request data
-		const { query } = (await request.json()) as SearchRequestBody;
+		const url = new URL(request.url);
+		const query = url.searchParams.get("query") || "";
+		const currentUserId = Number(request.headers.get("x-user-id"));
 
-		if (!query) {
-			return { status: 400, body: "Search query is required" };
+		if (!query.trim()) {
+			return { status: 400, body: "Query parameter is required" };
 		}
 
 		const pool = await getPool();
 
-		// Search by username or gmail (case-insensitive)
 		const result = await pool
 			.request()
-			.input("query", sql.VarChar, `%${query}%`)
-			.query(
-				"SELECT id, username, gmail FROM [user] WHERE username LIKE @query OR gmail LIKE @query",
-			);
+			.input("query", sql.NVarChar, `%${query}%`)
+			.input("currentUserId", sql.Int, currentUserId)
+			.query(`
+                SELECT 
+                    u.id,
+                    u.username AS name,
+                    u.gmail,
+                    CASE 
+                        WHEN f.status = 'accepted' THEN 'friend'
+                        WHEN f.status = 'pending' THEN 'pending'
+                        ELSE 'not_friend'
+                    END AS friendship_status,
+                    ISNULL(p.status, 'offline') AS online
+                FROM [user] u
+                LEFT JOIN friendships f
+                    ON ( (f.user_id = @currentUserId AND f.friend_id = u.id)
+                      OR (f.friend_id = @currentUserId AND f.user_id = u.id) )
+                LEFT JOIN user_presence p
+                    ON p.user_id = u.id
+                WHERE (u.username LIKE @query OR u.gmail LIKE @query)
+                  AND u.id != @currentUserId
+            `);
 
-		if (result.recordset.length === 0) {
-			return { status: 404, body: "No users found" };
-		}
+		const users = result.recordset.map((row) => ({
+			id: row.id,
+			name: row.name,
+			gmail: row.gmail,
+			online: row.online === "online",
+			friendship_status: row.friendship_status,
+		}));
 
 		return {
 			status: 200,
-			jsonBody: {
-				message: "Users found successfully",
-				count: result.recordset.length,
-				users: result.recordset,
-			},
+			jsonBody: users,
 		};
 	} catch (error) {
-		console.error("User search error:", error);
+		context.error("Error searching users:", error);
 		return { status: 500, body: "Internal server error" };
 	}
 }
 
-// Register the Azure Function endpoint
-app.http("usersearch", {
-	methods: ["POST"],
+app.http("users/search", {
+	methods: ["GET"],
 	authLevel: "anonymous",
 	handler: userSearch,
 });
