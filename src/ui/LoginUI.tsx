@@ -71,10 +71,12 @@ export default function LoginUI() {
 			await login(email, password);
 			// Navigate to chat dashboard on success
 			navigate({ to: "/chat" });
-		} catch (err: any) {
-			setError(err.message || "Login failed");
-		} finally {
-			setLoading(false);
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				setError(err.message || "Login failed");
+			} else {
+				setError("Login failed");
+			}
 		}
 	};
 
@@ -120,7 +122,7 @@ export default function LoginUI() {
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-gray-400 hover:text-white"
+								className="absolute right-3 top-1/2 -translate-y-[1%] text-base text-gray-400 hover:text-white"
 							>
 								{showPassword ? "🙈" : "👁"}
 							</button>
